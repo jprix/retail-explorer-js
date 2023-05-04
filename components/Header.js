@@ -14,59 +14,42 @@
  * limitations under the License.
  */
 
-import React, { useContext } from "react";
-import { TopNavigation } from "@cloudscape-design/components";
-import { CartContext } from "../context/cartContext";
-import { useRouter } from "next/router";
+import React, { useContext } from 'react';
+import { TopNavigation } from '@cloudscape-design/components';
+import { ProfileContext } from '../context/profileContext';
+import { useRouter } from 'next/router';
 
 export default function Header() {
-  const { totalPrice, qty } = useContext(CartContext);
+  const { userProfile } = useContext(ProfileContext);
   const router = useRouter();
 
+  const name = userProfile?.name;
   return (
     <TopNavigation
       identity={{
-        href: "/",
-        title: "Rose Interiors",
+        href: '/',
+        title: 'Coin Auth',
         logo: {
-          src: "/rose-interiors-logo.png",
-          alt: "rose-interiors-logo",
+          src: '/rose-interiors-logo.png',
+          alt: 'rose-interiors-logo',
         },
       }}
       utilities={[
         {
-          type: "menu-dropdown",
-          text: `Cart Items ${qty} |  $ ${totalPrice}`,
-          ariaLabel: "Cart",
-          title: "Settings",
-          items: [
-            {
-              id: "charges",
-              text: "Orders",
-              href: "/charges",
-            },
-          ],
-        },
-        {
-          type: "menu-dropdown",
-          text: "Patrick Hughes",
-          iconName: "user-profile",
-          iconAlign: "right",
-          items: [
-            { id: "profile", text: "Profile" },
-            { id: "orders", text: "Order History" },
-            { id: "account", text: "Account Settings" },
-            { id: "signout", text: "Sign out" },
-          ],
+          type: 'menu-dropdown',
+          text: name ? userProfile?.name : 'Sign in',
+          iconName: 'user-profile',
+          iconAlign: 'right',
+          items: [{ id: 'signout', text: 'Sign out' }],
         },
       ]}
       i18nStrings={{
-        searchIconAriaLabel: "Search",
-        searchDismissIconAriaLabel: "Close search",
-        overflowMenuTriggerText: "More",
-        overflowMenuTitleText: "All",
-        overflowMenuBackIconAriaLabel: "Back",
-        overflowMenuDismissIconAriaLabel: "Close menu",
+        searchIconAriaLabel: 'Search',
+        searchDismissIconAriaLabel: 'Close search',
+        overflowMenuTriggerText: 'More',
+        overflowMenuTitleText: 'All',
+        overflowMenuBackIconAriaLabel: 'Back',
+        overflowMenuDismissIconAriaLabel: 'Close menu',
       }}
     />
   );

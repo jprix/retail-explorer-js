@@ -27,16 +27,19 @@ export default function HomePage() {
   const { query } = router;
   const { getAuthToken, authToken, gettingToken } = useContext(UserContext);
   const code = query.code;
+  console.log(code);
+  console.log('this is the authToken object', authToken);
 
   useEffect(() => {
     const token = authToken?.access_token;
-    console.log(gettingToken, token);
+    console.log('this is the authToken object', authToken);
 
-    if (token) {
+    if (Object.keys(authToken || {}).length === 0 && code === undefined) {
+      return;
+    } else if ((code && !gettingToken && token !== '') || undefined || null) {
       console.log('executing landing route push');
       router.push(`/landing?token=${token}`);
-    }
-    if (code && !token) {
+    } else {
       getAuthToken(code);
     }
   }, [authToken]);

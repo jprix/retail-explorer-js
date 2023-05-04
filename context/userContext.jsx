@@ -21,7 +21,7 @@ const UserProvider = ({ children }) => {
           method: 'POST',
         });
         const data = await tokenResponse.json();
-        setAuthToken(data.data);
+        setAuthToken(data);
         console.log('this is the data ', data);
       }
     } catch (error) {
