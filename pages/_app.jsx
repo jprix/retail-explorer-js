@@ -17,11 +17,14 @@
 import '../styles/globals.css';
 import '@cloudscape-design/global-styles/index.css';
 import UserProvider from '../context/UserContext';
+import ProfileProvider from '../context/profileContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
-      <Component {...pageProps} />
+      <ProfileProvider>
+        <Component {...pageProps} />
+      </ProfileProvider>
     </UserProvider>
   );
 }
