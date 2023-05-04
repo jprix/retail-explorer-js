@@ -2,6 +2,7 @@ import { Container, Header, SpaceBetween } from '@cloudscape-design/components';
 import { useContext, useEffect } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useRouter } from 'next/router';
+import Layout from '../components/Layouts';
 
 export function Landing(props) {
   const router = useRouter();
@@ -12,21 +13,23 @@ export function Landing(props) {
   const tokenDisplay = authToken?.access_token;
 
   return (
-    <Container
-      variant="stacked"
-      header={
-        <Header
-          variant="h2"
-          actions={
-            <SpaceBetween direction="horizontal" size="l"></SpaceBetween>
-          }
-        >
-          Landing Page
-        </Header>
-      }
-    >
-      {tokenDisplay}
-    </Container>
+    <Layout>
+      <Container
+        variant="stacked"
+        header={
+          <Header
+            variant="h2"
+            actions={
+              <SpaceBetween direction="horizontal" size="l"></SpaceBetween>
+            }
+          >
+            Landing Page
+          </Header>
+        }
+      >
+        {tokenDisplay}
+      </Container>
+    </Layout>
   );
 }
 

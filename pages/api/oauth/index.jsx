@@ -1,5 +1,3 @@
-// pages/api/hello.js
-
 export default async function handler(req, res) {
   console.log('hit api');
   if (req.method === 'POST') {
