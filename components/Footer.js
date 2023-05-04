@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-import Link from "next/link";
-import styles from "../styles/Footer.module.css";
+import Link from 'next/link';
+import styles from '../styles/Footer.module.css';
 
 export default function Footer() {
   return (
     <div>
       <footer className={styles.footer}>
-        <p>Copyright &copy; Rose Interiors 2022</p>
+        <p>Copyright &copy; Coin Auth 2022</p>
         <p>
-          <Link href={"/about"}>About us</Link>
+          <Link href={'/about'}>About us</Link>
         </p>
       </footer>
     </div>

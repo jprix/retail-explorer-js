@@ -48,7 +48,17 @@ export default function HomePage() {
     setShowModal(false);
   };
 
-  return (
+  return (authToken || {}).length === 0 ? (
+    <Layout>
+      <>
+        <h1>Welcome to Retail API Explorer!</h1>
+        <p>
+          You have signed in! Please wait while we redirect you to the landing
+          page.
+        </p>
+      </>
+    </Layout>
+  ) : (
     <Layout>
       <>
         <h1>Welcome to Retail API Explorer!</h1>
@@ -59,9 +69,7 @@ export default function HomePage() {
         <Button variant="primary" onClick={() => setShowModal(true)}>
           Connect Coinbase Account
         </Button>
-        <Button variant="secondary" onClick={() => setShowModal(false)}>
-          Cancel
-        </Button>
+
         {showModal && (
           <UserConnect open={showModal} close={closePreviewModal} />
         )}
