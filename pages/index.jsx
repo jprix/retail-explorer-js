@@ -36,7 +36,7 @@ export default function HomePage() {
 
     if (Object.keys(authToken || {}).length === 0 && code === undefined) {
       return;
-    } else if ((code && !gettingToken && token !== '') || undefined || null) {
+    } else if ((code && !gettingToken && token !== undefined) || token) {
       console.log('executing landing route push');
       router.push(`/landing?token=${token}`);
     } else {
