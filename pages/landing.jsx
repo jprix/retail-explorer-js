@@ -10,8 +10,9 @@ import { useRouter } from 'next/router';
 import Layout from '../components/Layouts';
 import { gridDefinition } from '../utils/grids';
 import Profile from '../components/profile';
+import Orders from '../components/orders';
 
-export function Landing(props) {
+export function Landing() {
   const router = useRouter();
   const { authToken } = useContext(UserContext);
   const { query } = router;
@@ -45,7 +46,7 @@ export function Landing(props) {
           className="ordersContainer"
           header={<Header variant="h2">Your Orders</Header>}
         >
-          Your orders component goes here
+          <Orders token={token} />
         </Container>
       </Grid>
     </Layout>

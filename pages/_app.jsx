@@ -18,12 +18,15 @@ import '../styles/globals.css';
 import '@cloudscape-design/global-styles/index.css';
 import UserProvider from '../context/UserContext';
 import ProfileProvider from '../context/profileContext';
+import OrdersProvider from '../context/ordersContext';
 
 function MyApp({ Component, pageProps }) {
   return (
     <UserProvider>
       <ProfileProvider>
-        <Component {...pageProps} />
+        <OrdersProvider>
+          <Component {...pageProps} />
+        </OrdersProvider>
       </ProfileProvider>
     </UserProvider>
   );
