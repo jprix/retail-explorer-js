@@ -49,9 +49,9 @@
 export default async function listOrders(req, res) {
   const { query } = req;
 
-  const access_token = query.token;
-  console.log(access_token);
-  let targetUrl = `https://api.coinbase.com/v2/accounts`;
+  const { token, account_id } = query;
+  console.log(token, account_id);
+  let targetUrl = `https://api.coinbase.com/v2/accounts/${account_id}/buys`;
 
   if (req.method === 'GET') {
     // Handle a GET request
@@ -63,16 +63,17 @@ export default async function listOrders(req, res) {
         headers: {
           Accept: 'application/json',
           'CB-VERSION': '2015-04-08',
-          Authorization: 'Bearer ' + access_token,
+          Authorization: 'Bearer ' + token,
         },
       });
 
+      console.log(getOrders);
       const response = await getOrders.json();
       const userOrders = response.data;
 
       return res.status(200).json(userOrders);
     } catch (error) {
-      console.log('this was the user profile error', error);
+      console.log('this was the user orders error', error);
       res.status(500).json({ error: 'Something went wrong' });
     }
   } else {

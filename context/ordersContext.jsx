@@ -7,20 +7,45 @@ export const OrdersContext = createContext(defaultState);
 const OrdersProvider = ({ children }) => {
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
-
   const [userOrders, setUserOrders] = useState([]);
+  const [orderLoading, setOrderLoading] = useState(true);
+  const [order, setOrder] = useState({});
+  const [orderFetching, setOrderFetching] = useState(false);
 
-  const getOrders = async (token) => {
+  const getOrderByID = async (token, account_id, order_id) => {
+    console.log('hit get user order');
+    if (orderFetching && order === {} && orderLoading) {
+      return;
+    }
+    setOrderFetching(true);
+    const tokenResponse = await fetch(
+      `/api/orders/${order_id}?token=${token}&account_id=${account_id}`,
+      {
+        method: 'GET',
+      }
+    );
+
+    const data = await tokenResponse.json();
+
+    setOrder(data);
+    setOrderLoading(false);
+    setOrderFetching(false);
+  };
+
+  const getOrders = async (token, account_id) => {
     console.log('hit get orders');
     if (fetching && userOrders === [] && loading) {
       return;
     }
     setFetching(true);
-    const tokenResponse = await fetch(`/api/orders?token=${token}`, {
-      method: 'GET',
-    });
+    const orderResponse = await fetch(
+      `/api/orders?token=${token}&account_id=${account_id}`,
+      {
+        method: 'GET',
+      }
+    );
 
-    const data = await tokenResponse.json();
+    const data = await orderResponse.json();
 
     setUserOrders(data);
     setOrdersLoading(false);
@@ -31,6 +56,10 @@ const OrdersProvider = ({ children }) => {
     userOrders,
     ordersLoading,
     getOrders,
+    getOrderByID,
+    order,
+    orderLoading,
+    setOrderLoading,
   };
 
   return (
