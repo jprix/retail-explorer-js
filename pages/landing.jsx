@@ -11,6 +11,7 @@ import Layout from '../components/Layouts';
 import { gridDefinition } from '../utils/grids';
 import Profile from '../components/profile';
 import Orders from '../components/orders';
+import AssetInfo from '../components/assetInfo';
 
 export function Landing() {
   const router = useRouter();
@@ -24,17 +25,19 @@ export function Landing() {
       <Grid id="homeDashboard" gridDefinition={gridDefinition}>
         <Container
           variant="stacked"
-          header={
-            <Header
-              variant="h2"
-              actions={
-                <SpaceBetween direction="horizontal" size="l"></SpaceBetween>
-              }
-            >
-              Landing Page
-            </Header>
-          }
-        ></Container>
+          // header={
+          //   <Header
+          //     variant="h2"
+          //     actions={
+          //       <SpaceBetween direction="horizontal" size="l"></SpaceBetween>
+          //     }
+          //   >
+          //     Landing Page
+          //   </Header>
+          // }
+        >
+          <AssetInfo />
+        </Container>
         <Container
           className="profileContentt"
           // loading={balanceLoaded}
