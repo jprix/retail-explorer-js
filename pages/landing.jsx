@@ -23,21 +23,8 @@ export function Landing() {
   return (
     <Layout>
       <Grid id="homeDashboard" gridDefinition={gridDefinition}>
-        <Container
-          variant="stacked"
-          // header={
-          //   <Header
-          //     variant="h2"
-          //     actions={
-          //       <SpaceBetween direction="horizontal" size="l"></SpaceBetween>
-          //     }
-          //   >
-          //     Landing Page
-          //   </Header>
-          // }
-        >
-          <AssetInfo token={token} />
-        </Container>
+        <AssetInfo token={token} />
+
         <Container
           className="profileContentt"
           // loading={balanceLoaded}

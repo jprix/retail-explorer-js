@@ -1,8 +1,16 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { AssetContext } from '../context/assetContext';
+import { Icons } from '../utils/Icons';
 
-import { HelpPanel, ColumnLayout } from '@cloudscape-design/components';
+import {
+  HelpPanel,
+  ColumnLayout,
+  Button,
+  ButtonGroup,
+  Box,
+  Container,
+} from '@cloudscape-design/components';
 
 function AssetInfo(props) {
   const {
@@ -20,17 +28,42 @@ function AssetInfo(props) {
     }
   }, []);
 
-  console.log('***', userAssets);
   const assetInfo = userAssets.filter((obj) => obj.currency === 'BTC');
   console.log(assetInfo);
 
+  const handleTransfer = () => {
+    console.log('Transfer action');
+    // code to execute the 'transfer' action
+  };
+
+  const handleDeposit = () => {
+    console.log('Deposit action');
+    // code to execute the 'deposit' action
+  };
+
   return (
-    <>
-      <HelpPanel header={<h3> {assetInfo[0]?.currency} Asset Info</h3>}>
+    <Container
+      variant="stacked"
+      footer="footer content"
+      actions={
+        <ButtonGroup>
+          <Button onClick={handleTransfer}>Transfer</Button>
+          <Button onClick={handleDeposit}>Deposit</Button>
+        </ButtonGroup>
+      }
+    >
+      <HelpPanel
+        header={
+          <>
+            <Icons asset={assetInfo[0]?.currency} /> Your
+            {assetInfo[0]?.currency} Wallet Info
+          </>
+        }
+      >
         <ColumnLayout variant="text-grid" borders="horizontal" columns={2}>
-          <h4>Wallet Name:</h4>
+          <h4>Name:</h4>
           {assetInfo[0]?.name}
-          <h4>Wallet ID:</h4>
+          <h4>ID:</h4>
           {assetInfo[0]?.id}
           <h4>Holds:</h4>
           {assetInfo[0]?.balance.amount}
@@ -38,7 +71,7 @@ function AssetInfo(props) {
           {assetInfo[0]?.native_balance.amount}
         </ColumnLayout>
       </HelpPanel>
-    </>
+    </Container>
   );
 }
 
