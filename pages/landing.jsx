@@ -36,7 +36,7 @@ export function Landing() {
           //   </Header>
           // }
         >
-          <AssetInfo />
+          <AssetInfo token={token} />
         </Container>
         <Container
           className="profileContentt"

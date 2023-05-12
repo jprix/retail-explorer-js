@@ -1,9 +1,8 @@
 export default async function listAccount(req, res) {
   const { query } = req;
 
-  const { account_id } = query;
+  const { token, account_id } = query;
 
-  const { token } = query;
   let targetUrl = `https://api.coinbase.com/v2/accounts/${account_id}`;
 
   if (req.method === 'GET') {
@@ -19,8 +18,8 @@ export default async function listAccount(req, res) {
           Authorization: 'Bearer ' + token,
         },
       });
-
-      console.log(getAccount);
+      console.log('this was the get account', targetUrl);
+      //console.log(getAccount);
       const response = await getAccount.json();
       const AccountById = response.data;
 
