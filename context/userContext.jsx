@@ -15,6 +15,7 @@ const UserProvider = ({ children }) => {
   const getAuthToken = async (code) => {
     try {
       if (cachedAuthToken) {
+        console.log('cached token exists');
         router.push(`/landing?token=${cachedAuthToken}`);
       } else {
         const tokenResponse = await fetch(`/api/oauth?code=${code}`, {
@@ -38,6 +39,7 @@ const UserProvider = ({ children }) => {
     authToken: cachedAuthToken,
     gettingToken,
     setGettingToken,
+    setAuthToken,
   };
 
   return <UserContext.Provider value={state}>{children}</UserContext.Provider>;

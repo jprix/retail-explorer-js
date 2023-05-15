@@ -50,7 +50,7 @@ export default async function listOrders(req, res) {
   const { query } = req;
 
   const { token, account_id } = query;
-  console.log(token, account_id);
+  console.log('****', token, account_id);
   let targetUrl = `https://api.coinbase.com/v2/accounts/${account_id}/buys`;
 
   if (req.method === 'GET') {

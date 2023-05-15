@@ -17,6 +17,7 @@ function AssetInfo(props) {
     userAssets,
     assetsLoading: assetLoaded,
     getAssets,
+    asset,
   } = useContext(AssetContext);
 
   const token = props.token;
@@ -26,9 +27,9 @@ function AssetInfo(props) {
       console.log('making assets call');
       getAssets(token);
     }
-  }, []);
+  }, [asset]);
 
-  const assetInfo = userAssets.filter((obj) => obj.currency === 'BTC');
+  const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   console.log(assetInfo);
 
   const handleTransfer = () => {
@@ -55,8 +56,10 @@ function AssetInfo(props) {
       <HelpPanel
         header={
           <>
-            <Icons asset={assetInfo[0]?.currency} /> Your
-            {assetInfo[0]?.currency} Wallet Info
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <Icons asset={assetInfo[0]?.currency} /> {assetInfo[0]?.currency}{' '}
+              Wallet Info
+            </div>
           </>
         }
       >

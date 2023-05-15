@@ -33,7 +33,7 @@ const OrdersProvider = ({ children }) => {
   };
 
   const getOrders = async (token, account_id) => {
-    console.log('hit get orders');
+    console.log('hit get orders', account_id);
     if (fetching && userOrders === [] && loading) {
       return;
     }

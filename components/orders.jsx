@@ -9,10 +9,8 @@ import {
   HelpPanel,
 } from '@cloudscape-design/components';
 import { OrdersContext } from '../context/ordersContext';
-import 'ace-builds/css/ace.css';
-import 'ace-builds/css/theme/dawn.css';
-import 'ace-builds/css/theme/tomorrow_night_bright.css';
 
+import { AssetContext } from '../context/assetContext';
 function Orders(props) {
   const {
     getOrders,
@@ -24,16 +22,21 @@ function Orders(props) {
     setOrderLoading,
   } = useContext(OrdersContext);
 
+  const { userAssets, asset } = useContext(AssetContext);
+  const assetObject = userAssets.filter((obj) => obj.currency === asset);
+  console.log('***', assetObject[0]?.id);
+  const walletId = assetObject[0]?.id;
+  console.log('wallet id', walletId);
   const token = props.token;
   const [detailsModal, setDetailsModal] = useState(false);
 
   useEffect(() => {
     if (userOrders !== []) {
       // using length instead of equality check
-      console.log('making orders call');
-      getOrders(token, 'f4f84a96-1e1a-5346-b594-a5c25cdf874e');
+      console.log('making orders call with walletId', walletId);
+      getOrders(token, walletId);
     }
-  }, []); // useEffect now depends on userOrders
+  }, [asset]); // useEffect now depends on userOrders
 
   const closeModal = () => {
     setDetailsModal(false);
@@ -47,7 +50,7 @@ function Orders(props) {
   const openModal = async (id) => {
     setDetailsModal(true);
     setOrderLoading(true);
-    await getOrderByID(token, 'f4f84a96-1e1a-5346-b594-a5c25cdf874e', id);
+    await getOrderByID(token, walletId, id);
   };
 
   return (

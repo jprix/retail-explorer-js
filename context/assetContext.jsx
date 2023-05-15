@@ -9,17 +9,18 @@ const AssetProvider = ({ children }) => {
   const [fetching, setFetching] = useState(false);
 
   const [userAssets, setUserAssets] = useState([]);
+  const [asset, setAsset] = useState('');
 
   const getAssets = async (token) => {
     if (fetching && userAssets?.name && loading) {
       return;
     }
     setFetching(true);
-    const tokenResponse = await fetch(`/api/accounts?token=${token}`, {
+    const assetsResponse = await fetch(`/api/accounts?token=${token}`, {
       method: 'GET',
     });
 
-    const data = await tokenResponse.json();
+    const data = await assetsResponse.json();
 
     setUserAssets(data);
     console.log(userAssets);
@@ -27,10 +28,17 @@ const AssetProvider = ({ children }) => {
     setFetching(false);
   };
 
+  const selectedAsset = async (asset) => {
+    setAsset(asset);
+  };
+
   const state = {
     userAssets,
     assetsLoading,
     getAssets,
+    asset,
+    selectedAsset,
+    setAsset,
   };
 
   return (
