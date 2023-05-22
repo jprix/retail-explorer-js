@@ -15,17 +15,24 @@ const AssetProvider = ({ children }) => {
     if (fetching && userAssets?.name && loading) {
       return;
     }
-    setFetching(true);
-    const assetsResponse = await fetch(`/api/accounts?token=${token}`, {
-      method: 'GET',
-    });
+    try {
+      setFetching(true);
+      const assetsResponse = await fetch(`/api/accounts?token=${token}`, {
+        method: 'GET',
+      });
 
-    const data = await assetsResponse.json();
+      const data = await assetsResponse.json();
 
-    setUserAssets(data);
-    console.log(userAssets);
-    setAssetsLoading(false);
-    setFetching(false);
+      setUserAssets(data);
+      console.log(userAssets);
+      setAssetsLoading(false);
+      setFetching(false);
+    } catch (error) {
+      console.log(error);
+      setUserAssets([]);
+      setAssetsLoading(false);
+      setFetching(false);
+    }
   };
 
   const selectedAsset = async (asset) => {
