@@ -32,7 +32,6 @@ function Orders(props) {
 
   useEffect(() => {
     if (userOrders !== []) {
-      // using length instead of equality check
       console.log('making orders call with walletId', walletId);
       getOrders(token, walletId);
     }
