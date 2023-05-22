@@ -17,6 +17,8 @@ const AssetProvider = ({ children }) => {
     }
     try {
       setFetching(true);
+      setAssetsLoading(true);
+
       const assetsResponse = await fetch(`/api/accounts?token=${token}`, {
         method: 'GET',
       });
