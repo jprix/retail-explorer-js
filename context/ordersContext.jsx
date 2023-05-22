@@ -24,12 +24,18 @@ const OrdersProvider = ({ children }) => {
         method: 'GET',
       }
     );
+    try {
+      const data = await tokenResponse.json();
 
-    const data = await tokenResponse.json();
-
-    setOrder(data);
-    setOrderLoading(false);
-    setOrderFetching(false);
+      setOrder(data);
+      setOrderLoading(false);
+      setOrderFetching(false);
+    } catch (error) {
+      setOrder({});
+      console.log('error', error);
+      setOrderLoading(false);
+      setOrderFetching(false);
+    }
   };
 
   const getOrders = async (token, account_id) => {

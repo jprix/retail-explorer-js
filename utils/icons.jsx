@@ -7,6 +7,8 @@ import {
   Ethereum,
   Cardano,
   Polygon,
+  Dogecoin,
+  DogecoinBadge,
 } from 'cryptocons';
 
 export const Icons = ({ asset }) => {
@@ -50,6 +52,10 @@ export const Icons = ({ asset }) => {
       return <Cosmos height="45px" width="45px" />;
     case 'ATOM':
       return <Cosmos height="45px" width="45px" />;
+    case 'DOGE_USD':
+      return <DogecoinBadge height="45px" width="45px" />;
+    case 'DOGE':
+      return <DogecoinBadge height="45px" width="45px" />;
 
     case 'USD':
       return <img src={USD} alt="USD" />;

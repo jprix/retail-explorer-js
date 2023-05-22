@@ -9,9 +9,11 @@ import {
   Button,
   ButtonGroup,
   Box,
+  Header,
   Container,
+  SpaceBetween,
 } from '@cloudscape-design/components';
-
+import { TradeForm } from './TradeModal';
 function AssetInfo(props) {
   const {
     userAssets,
@@ -21,6 +23,9 @@ function AssetInfo(props) {
   } = useContext(AssetContext);
 
   const token = props.token;
+  const closeTradeModal = () => {
+    setTradeModal(false);
+  };
 
   useEffect(() => {
     if (userAssets.length === 0) {
@@ -30,37 +35,36 @@ function AssetInfo(props) {
   }, [asset]);
 
   const assetInfo = userAssets.filter((obj) => obj.currency === asset);
-  console.log(assetInfo);
+  const [tradeModal, setTradeModal] = React.useState(false);
 
   const handleTransfer = () => {
     console.log('Transfer action');
     // code to execute the 'transfer' action
   };
 
-  const handleDeposit = () => {
-    console.log('Deposit action');
-    // code to execute the 'deposit' action
+  const handleTrade = () => {
+    console.log('Trade action');
+    setTradeModal(true);
   };
 
   return (
-    <Container
-      variant="stacked"
-      footer="footer content"
-      actions={
-        <ButtonGroup>
-          <Button onClick={handleTransfer}>Transfer</Button>
-          <Button onClick={handleDeposit}>Deposit</Button>
-        </ButtonGroup>
-      }
-    >
+    <Container className="assetInfoContainer">
       <HelpPanel
+        footer="footer content here"
         header={
-          <>
+          <Header
+            actions={
+              <SpaceBetween direction="horizontal" size="xs">
+                <Button onClick={handleTrade}>Trade</Button>
+                <Button>Transfer</Button>
+              </SpaceBetween>
+            }
+          >
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Icons asset={assetInfo[0]?.currency} /> {assetInfo[0]?.currency}{' '}
               Wallet Info
             </div>
-          </>
+          </Header>
         }
       >
         <ColumnLayout variant="text-grid" borders="horizontal" columns={2}>
@@ -74,6 +78,9 @@ function AssetInfo(props) {
           {assetInfo[0]?.native_balance.amount}
         </ColumnLayout>
       </HelpPanel>
+      {tradeModal ? (
+        <TradeForm token={token} open={tradeModal} close={closeTradeModal} />
+      ) : null}
     </Container>
   );
 }

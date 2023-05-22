@@ -55,7 +55,7 @@ export function Landing() {
             className="ordersContainer"
             header={<Header variant="h2">Your Orders</Header>}
           >
-            <Orders token={token} />
+            {asset !== '' ? <Orders token={token} /> : null}
           </Container>
         </>
       </Grid>

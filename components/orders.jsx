@@ -71,12 +71,12 @@ function Orders(props) {
             sortingField: 'id',
           },
           {
-            id: 'name',
-            header: 'name',
-            cell: (e) => e.name,
+            id: 'asset',
+            header: 'Asset',
+            cell: (e) => e.amount.currency,
             width: 130,
             minWidth: 130,
-            sortingField: 'name',
+            sortingField: 'asset',
           },
           {
             id: 'status',
@@ -107,6 +107,11 @@ function Orders(props) {
         items={userOrders}
         loading={ordersLoaded}
         loadingText="Loading Orders..."
+        empty={
+          <Box textAlign="center" color="inherit">
+            <b>No Orders Found</b>
+          </Box>
+        }
       />
       {detailsModal && ( // corrected conditional rendering syntax
         <Modal

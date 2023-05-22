@@ -62,6 +62,8 @@ export function AssetSwitcher(props) {
         options={[
           { label: 'ETH-USD', value: 'ETH' },
           { label: 'BTC-USD', value: 'BTC' },
+          { label: 'DOGE-USD', value: 'DOGE' },
+          { label: 'MATIC-USD', value: 'MATIC' },
         ]}
         selectedAriaLabel="Selected"
       />
