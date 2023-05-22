@@ -32,7 +32,6 @@ function Orders(props) {
 
   useEffect(() => {
     if (userOrders !== []) {
-      console.log('making orders call with walletId', walletId);
       getOrders(token, walletId);
     }
   }, [asset]); // useEffect now depends on userOrders

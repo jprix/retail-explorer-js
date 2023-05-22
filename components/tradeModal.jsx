@@ -8,9 +8,11 @@ import {
   Box,
   SpaceBetween,
   Select,
+  Spinner,
 } from '@cloudscape-design/components';
 
 import { AssetContext } from '../context/assetContext';
+import { placingOrderLoading, placingOrder } from '../context/ordersContext';
 
 export function TradeForm(props) {
   const { asset } = useContext(AssetContext);
@@ -55,7 +57,7 @@ export function TradeForm(props) {
       header="Place order"
     >
       {/* <h3>Please select the asset you would like to view:</h3> */}
-      <br />
+      {placingOrder ? <Spinner /> : null}
       <form onSubmit={handleSubmit}>
         <Form
           id="tradeForm"
@@ -88,6 +90,8 @@ export function TradeForm(props) {
           />
           <SpaceBetween direction="horizontal" size="xs">
             <br />
+            <br />
+
             <Select
               label="Side"
               selectedOption={selectedOrderSide}
