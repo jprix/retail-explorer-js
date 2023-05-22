@@ -47,6 +47,8 @@ const OrdersProvider = ({ children }) => {
 
     try {
       setFetching(true);
+      setOrdersLoading(true);
+
       const orderResponse = await fetch(
         `/api/orders?token=${token}&account_id=${account_id}`,
         {
