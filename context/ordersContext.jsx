@@ -11,7 +11,9 @@ const OrdersProvider = ({ children }) => {
   const [orderLoading, setOrderLoading] = useState(true);
   const [order, setOrder] = useState({});
   const [orderFetching, setOrderFetching] = useState(false);
-
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const [placingOrderLoading, setPlacingOrderLoading] = useState(false);
+  const [userOrder, setUserOrder] = useState({});
   const getOrderByID = async (token, account_id, order_id) => {
     console.log('hit get user order');
     if (orderFetching && order === {} && orderLoading) {
@@ -39,26 +41,51 @@ const OrdersProvider = ({ children }) => {
   };
 
   const getOrders = async (token, account_id) => {
-    console.log('hit get orders', account_id);
     if (fetching && userOrders === [] && loading) {
       return;
     }
-    setFetching(true);
-    const orderResponse = await fetch(
+
+    try {
+      setFetching(true);
+      const orderResponse = await fetch(
+        `/api/orders?token=${token}&account_id=${account_id}`,
+        {
+          method: 'GET',
+        }
+      );
+      const data = await orderResponse.json();
+
+      setUserOrders(data);
+      setOrdersLoading(false);
+      setFetching(false);
+    } catch (error) {
+      console.log('error', error);
+      setOrdersLoading(false);
+      setFetching(false);
+    }
+  };
+
+  const createOrder = async (token, account_id) => {
+    setPlacingOrder(true);
+    const createOrderResponse = await fetch(
       `/api/orders?token=${token}&account_id=${account_id}`,
       {
-        method: 'GET',
+        method: 'POST',
       }
     );
 
     const data = await orderResponse.json();
 
-    setUserOrders(data);
-    setOrdersLoading(false);
-    setFetching(false);
+    setUserOrder(data);
+    setPlacingOrderLoading(false);
+    setPlacingOrder(false);
   };
-
   const state = {
+    placingOrder,
+    setPlacingOrder,
+    placingOrderLoading,
+    userOrder,
+    createOrder,
     userOrders,
     ordersLoading,
     getOrders,

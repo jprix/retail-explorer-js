@@ -17,14 +17,10 @@ export function TradeForm(props) {
     value: 'MARKET',
   });
 
-  //   useEffect(() => {
-  //     if (props.open) {
-  //       setSelectedAssetOption({
-  //         label: 'ETH-USD',
-  //         value: 'ETH',
-  //       });
-  //     }
-  //   }, [props.open]);
+  const [selectedOrderSide, setSelectedOrderSide] = useState({
+    label: 'BUY',
+    value: 'BUY',
+  });
 
   const closeModal = () => {
     props.close();
@@ -64,7 +60,17 @@ export function TradeForm(props) {
           { label: 'MARKET', value: 'MARKET' },
           { label: 'LIMIT', value: 'LIMIT' },
         ]}
-        selectedAriaLabel="Selected"
+        selectedAriaLabel="Selected Order Type"
+      />
+      <Select
+        label="Side"
+        selectedOption={selectedOrderSide}
+        onChange={({ detail }) => setSelectedOrderSide(detail.selectedOption)}
+        options={[
+          { label: 'BUY', value: 'BUY' },
+          { label: 'SELL', value: 'SELL' },
+        ]}
+        selectedAriaLabel="Selected Side"
       />
     </Modal>
   );
