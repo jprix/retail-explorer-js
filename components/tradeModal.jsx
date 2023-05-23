@@ -22,6 +22,7 @@ export function TradeForm(props) {
   const { asset } = useContext(AssetContext);
   const [quantity, setQuantity] = React.useState('1');
   const [error, setError] = React.useState('');
+  const [baseCurrency, setBaseCurrency] = React.useState(0);
 
   const [selectedOrderType, setSelectedOrderType] = useState({
     label: 'MARKET',
@@ -40,6 +41,15 @@ export function TradeForm(props) {
   const handleQuantity = (qty) => {
     if (!isNaN(+qty)) {
       setQuantity(qty);
+      setError('');
+    } else {
+      setError('Please enter an integer value');
+    }
+  };
+
+  const handleBaseCurrency = (bsc) => {
+    if (!isNaN(+bsc)) {
+      setBaseCurrency(bsc);
       setError('');
     } else {
       setError('Please enter an integer value');
@@ -118,13 +128,27 @@ export function TradeForm(props) {
               selectedAriaLabel="Selected Side"
             />
           </SpaceBetween>
-          <FormField label="Quantity" id="quantity" errorText={error}>
-            <Input
-              id="inputQuantity"
-              onChange={({ detail }) => handleQuantity(detail.value)}
-              value={quantity}
-            />
-          </FormField>
+          {selectedOrderSide.value === 'BUY' ? (
+            <FormField label="Quantity" id="quantity" errorText={error}>
+              <Input
+                id="inputQuantity"
+                onChange={({ detail }) => handleQuantity(detail.value)}
+                value={quantity}
+              />
+            </FormField>
+          ) : (
+            <FormField
+              label="Base Currency"
+              id="base_currency"
+              errorText={error}
+            >
+              <Input
+                id="baseCurrency"
+                onChange={({ detail }) => handleBaseCurrency(detail.value)}
+                value={baseCurrency}
+              />
+            </FormField>
+          )}
         </Form>
       </form>
     </Modal>
