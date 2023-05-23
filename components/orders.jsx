@@ -32,7 +32,7 @@ function Orders(props) {
 
   useEffect(() => {
     if (userOrders !== []) {
-      getOrders(token, walletId);
+      getOrders(token, walletId, asset);
     }
   }, [asset]); // useEffect now depends on userOrders
 

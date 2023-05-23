@@ -17,6 +17,15 @@ export function SelectScopes({
     { label: 'wallet:addresses:read', value: 'wallet:addresses:read' },
     { label: 'wallet:addresses:create', value: 'wallet:addresses:create' },
     { label: 'wallet:buys:read', value: 'wallet:buys:read' },
+    { label: 'wallet:sells:read', value: 'wallet:sells:read' },
+    { label: 'wallet:orders:create', value: 'wallet:orders:create' },
+    { label: 'wallet:orders:read', value: 'wallet:orders:read' },
+    { label: 'wallet:orders:refund', value: 'wallet:orders:refund' },
+    { label: 'wallet:transactions:read', value: 'wallet:transactions:read' },
+
+    { label: 'wallet:trades:read', value: 'wallet:trades:read' },
+    { label: 'wallet:trades:create', value: 'wallet:trades:create' },
+
     { label: 'wallet:buys:create', value: 'wallet:buys:create' },
     { label: 'wallet:deposits:read', value: 'wallet:deposits:read' },
     { label: 'wallet:deposits:create', value: 'wallet:deposits:create' },

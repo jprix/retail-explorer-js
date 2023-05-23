@@ -1,8 +1,7 @@
 export default async function orders(req, res) {
   const { query } = req;
-
-  const { token, product_id, side, quote_size, account_id } = query;
-  let targetUrl = `https://api.coinbase.com/v2/accounts/${account_id}/buys`;
+  const { token, product_id, side, quote_size, asset } = query;
+  let targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
 
   if (req.method === 'GET') {
     // Handle a GET request
@@ -20,9 +19,9 @@ export default async function orders(req, res) {
 
       console.log(getOrders);
       const response = await getOrders.json();
-      const userOrders = response.data;
+      const fills = response.fills;
 
-      return res.status(200).json(userOrders);
+      return res.status(200).json(fills);
     } catch (error) {
       console.log('this was the user orders error', error);
       res.status(500).json({ error: 'Something went wrong' });
@@ -42,6 +41,7 @@ export default async function orders(req, res) {
     };
 
     let payload = JSON.stringify(body);
+    console.log('hit body', payload);
     targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders`;
     try {
       const initiateExecuteOrder = await fetch(targetUrl, {
@@ -57,11 +57,12 @@ export default async function orders(req, res) {
       });
 
       const response = await initiateExecuteOrder.json();
-      const order = response.data;
 
-      return res.status(200).json(order);
+      console.log('****', response);
+
+      return res.status(201).json(response);
     } catch (error) {
-      console.log('this was the user orders error', error);
+      console.log('this was the place order error', error);
       res.status(500).json({ error: 'Something went wrong' });
     }
   }

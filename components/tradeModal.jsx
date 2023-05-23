@@ -9,13 +9,20 @@ import {
   SpaceBetween,
   Select,
   Spinner,
+  Input,
 } from '@cloudscape-design/components';
 
 import { AssetContext } from '../context/assetContext';
-import { placingOrderLoading, placingOrder } from '../context/ordersContext';
+import { OrdersContext } from '../context/ordersContext';
 
 export function TradeForm(props) {
+  const { userOrder, placingOrder, createOrder } = useContext(OrdersContext);
+
+  const token = props.token;
   const { asset } = useContext(AssetContext);
+  const [quantity, setQuantity] = React.useState('1');
+  const [error, setError] = React.useState('');
+
   const [selectedOrderType, setSelectedOrderType] = useState({
     label: 'MARKET',
     value: 'MARKET',
@@ -30,14 +37,32 @@ export function TradeForm(props) {
     props.close();
   };
 
-  const initiateTrade = () => {
-    console.log('trade placed');
-    closeModal();
+  const handleQuantity = (qty) => {
+    if (!isNaN(+qty)) {
+      setQuantity(qty);
+      setError('');
+    } else {
+      setError('Please enter an integer value');
+    }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('form submitted');
+    try {
+      const order = await createOrder(
+        token,
+        asset,
+        quantity,
+        selectedOrderSide.value
+      );
+      alert(order);
+      closeModal();
+    } catch (error) {
+      console.log('error', error);
+      alert(error.message);
+      closeModal();
+    }
   };
 
   return (
@@ -45,15 +70,6 @@ export function TradeForm(props) {
       onDismiss={closeModal}
       visible={props.open}
       closeAriaLabel="Close modal"
-      footer={
-        <Box float="right">
-          <SpaceBetween direction="horizontal" size="xs">
-            <Button variant="link" onClick={closeModal}>
-              Cancel
-            </Button>
-          </SpaceBetween>
-        </Box>
-      }
       header="Place order"
     >
       {/* <h3>Please select the asset you would like to view:</h3> */}
@@ -89,9 +105,6 @@ export function TradeForm(props) {
             selectedAriaLabel="Selected Order Type"
           />
           <SpaceBetween direction="horizontal" size="xs">
-            <br />
-            <br />
-
             <Select
               label="Side"
               selectedOption={selectedOrderSide}
@@ -105,6 +118,13 @@ export function TradeForm(props) {
               selectedAriaLabel="Selected Side"
             />
           </SpaceBetween>
+          <FormField label="Quantity" id="quantity" errorText={error}>
+            <Input
+              id="inputQuantity"
+              onChange={({ detail }) => handleQuantity(detail.value)}
+              value={quantity}
+            />
+          </FormField>
         </Form>
       </form>
     </Modal>
