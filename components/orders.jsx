@@ -55,15 +55,15 @@ function Orders(props) {
     <>
       <Table
         resizableColumns={true}
-        trackBy="id"
+        trackBy="order_id"
         sortingDescending
         onSortingChange={handleSort}
         variant="container"
         columnDefinitions={[
           {
-            id: 'id',
+            id: 'order_id',
             header: 'Order Id',
-            cell: (e) => e.id,
+            cell: (e) => e.order_id,
             width: 150,
             minWidth: 150,
             sortingField: 'id',
@@ -71,23 +71,23 @@ function Orders(props) {
           {
             id: 'asset',
             header: 'Asset',
-            cell: (e) => e.amount.currency,
+            cell: (e) => e.product_id,
             width: 130,
             minWidth: 130,
             sortingField: 'asset',
           },
           {
-            id: 'status',
-            header: 'Status',
-            cell: (e) => e.status,
+            id: 'size',
+            header: 'Size',
+            cell: (e) => e.size,
             width: 135,
             minWidth: 135,
-            sortingField: 'status',
+            sortingField: 'size',
           },
           {
             id: 'created_at',
             header: 'Order Date',
-            cell: (e) => e.created_at,
+            cell: (e) => e.trade_time,
             width: 150,
             minWidth: 150,
             sortingField: 'created_at',
@@ -96,7 +96,7 @@ function Orders(props) {
             id: 'details',
             header: 'Details',
             cell: (e) => (
-              <Button onClick={() => openModal(e.id)}>Details</Button>
+              <Button onClick={() => openModal(e.order_id)}>Details</Button>
             ),
             width: 150,
             minWidth: 150,
@@ -137,14 +137,14 @@ function Orders(props) {
                 loading={orderLoaded}
               >
                 <h4>Order Id:</h4>
-                {order?.id}
+                {order?.order_id}
 
                 <h4>Status:</h4>
 
                 {order?.status}
 
                 <h4>Date:</h4>
-                {order?.created_at}
+                {order?.trade_time}
               </ColumnLayout>
             </HelpPanel>
           </>
