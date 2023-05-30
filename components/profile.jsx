@@ -21,7 +21,11 @@ function Profile(props) {
 
   return (
     <>
-      <HelpPanel header={<h3>Profile Info</h3>}>
+      <HelpPanel
+        loading={profileLoaded}
+        loadingText="Loading your profile..."
+        header={<h3>Profile Info</h3>}
+      >
         <ColumnLayout variant="text-grid" borders="horizontal" columns={2}>
           <h4>Name:</h4>
           {userProfile?.name}

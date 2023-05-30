@@ -27,12 +27,9 @@ export default function HomePage() {
   const { query } = router;
   const { getAuthToken, authToken, gettingToken } = useContext(UserContext);
   const code = query.code;
-  console.log(code);
-  console.log('this is the authToken object', authToken);
 
   useEffect(() => {
     const token = authToken?.access_token;
-    console.log('this is the authToken object', authToken);
 
     if (Object.keys(authToken || {}).length === 0 && code === undefined) {
       return;
@@ -42,7 +39,7 @@ export default function HomePage() {
     } else {
       getAuthToken(code);
     }
-  }, [authToken]);
+  }, [authToken, code]);
 
   const closePreviewModal = () => {
     setShowModal(false);
@@ -78,11 +75,11 @@ export default function HomePage() {
   );
 }
 
-export async function getServerSideProps(context) {
-  const response = await fetch(`http://localhost:3000/api/products`);
-  const furniture = await response.json();
+// export async function getServerSideProps(context) {
+//   const response = await fetch(`http://localhost:3000/api/products`);
+//   const orders = await response.json();
 
-  return {
-    props: { furniture },
-  };
-}
+//   return {
+//     props: { orders },
+//   };
+// }

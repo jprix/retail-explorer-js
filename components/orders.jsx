@@ -24,12 +24,11 @@ function Orders(props) {
 
   const { userAssets, asset } = useContext(AssetContext);
   const assetObject = userAssets.filter((obj) => obj.currency === asset);
-  console.log('***', assetObject[0]?.id);
   const walletId = assetObject[0]?.id;
-  console.log('wallet id', walletId);
   const token = props.token;
   const [detailsModal, setDetailsModal] = useState(false);
 
+  console.log(order);
   useEffect(() => {
     if (userOrders !== []) {
       getOrders(token, walletId, asset);
@@ -66,7 +65,7 @@ function Orders(props) {
             cell: (e) => e.order_id,
             width: 150,
             minWidth: 150,
-            sortingField: 'id',
+            sortingField: 'order_id',
           },
           {
             id: 'asset',
@@ -138,13 +137,18 @@ function Orders(props) {
               >
                 <h4>Order Id:</h4>
                 {order?.order_id}
-
                 <h4>Status:</h4>
-
                 {order?.status}
-
                 <h4>Date:</h4>
-                {order?.trade_time}
+                {order?.created_time}
+                <h4>Average Fill Price:</h4>
+                {order?.average_filled_price}
+                <h4>Order Type:</h4>
+                {order?.order_type}
+                <h4>Fill Value:</h4>
+                {order?.filled_value}
+                <h4>Number of Fills:</h4>
+                {order?.number_of_fills}
               </ColumnLayout>
             </HelpPanel>
           </>

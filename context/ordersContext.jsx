@@ -15,19 +15,20 @@ const OrdersProvider = ({ children }) => {
   const [placingOrderLoading, setPlacingOrderLoading] = useState(false);
   const [userOrder, setUserOrder] = useState({});
   const getOrderByID = async (token, account_id, order_id) => {
-    console.log('hit get user order');
     if (orderFetching && order === {} && orderLoading) {
       return;
     }
     setOrderFetching(true);
-    const tokenResponse = await fetch(
+    setOrderLoading(true);
+
+    const fetchOrderById = await fetch(
       `/api/orders/${order_id}?token=${token}&account_id=${account_id}`,
       {
         method: 'GET',
       }
     );
     try {
-      const data = await tokenResponse.json();
+      const data = await fetchOrderById.json();
 
       setOrder(data);
       setOrderLoading(false);

@@ -50,7 +50,6 @@ export function SelectScopes({
 
   const handleSelectAll = () => {
     const allValues = scopes.map((scope) => scope);
-    console.log(allValues);
     setSelectedScopeOptions(allValues);
   };
 
@@ -58,7 +57,6 @@ export function SelectScopes({
     setSelectedScopeOptions([]);
   };
 
-  console.log(selectedScopeOptions);
   return (
     <div>
       <Multiselect

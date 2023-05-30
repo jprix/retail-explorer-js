@@ -2,8 +2,8 @@ export default async function OrderById(req, res) {
   const { query } = req;
 
   const { token, account_id, id } = query;
-  console.log(token, account_id, id);
-  let targetUrl = `https://api.coinbase.com/v2/accounts/${account_id}/buys/${id}`;
+  console.log(token, id);
+  let targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders/historical/${id}`;
 
   if (req.method === 'GET') {
     try {
@@ -19,7 +19,8 @@ export default async function OrderById(req, res) {
       });
 
       const response = await getOrderById.json();
-      const userOrder = response.data;
+      const userOrder = response.order;
+      console.log('this is the user order', userOrder);
 
       return res.status(200).json(userOrder);
     } catch (error) {

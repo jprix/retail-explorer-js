@@ -17,7 +17,6 @@ export default async function orders(req, res) {
         },
       });
 
-      console.log(getOrders);
       const response = await getOrders.json();
       const fills = response.fills;
 

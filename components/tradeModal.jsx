@@ -80,7 +80,7 @@ export function TradeForm(props) {
       onDismiss={closeModal}
       visible={props.open}
       closeAriaLabel="Close modal"
-      header="Place order"
+      header="Place order1"
     >
       {/* <h3>Please select the asset you would like to view:</h3> */}
       {placingOrder ? <Spinner /> : null}
