@@ -54,7 +54,7 @@ function Orders(props) {
     <>
       <Table
         resizableColumns={true}
-        trackBy="order_id"
+        trackBy="entry_id"
         sortingDescending
         onSortingChange={handleSort}
         variant="container"

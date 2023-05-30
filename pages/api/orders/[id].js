@@ -20,7 +20,6 @@ export default async function OrderById(req, res) {
 
       const response = await getOrderById.json();
       const userOrder = response.order;
-      console.log('this is the user order', userOrder);
 
       return res.status(200).json(userOrder);
     } catch (error) {
