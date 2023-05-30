@@ -2,9 +2,6 @@
 
 Built with [Next.js](https://nextjs.org/), Coin Auth is a luxury furniture store that has implemented Coinbase Commerce to accept crypto payments from customers. 
 
-Payment activity can be monitored via the Coinbase Commerce [Merchant Dashboard](https://beta.commerce.coinbase.com/payments).
-
-Crypto funds are settled within a [managed Coinbase Exchange](https://exchange.coinbase.com/) account as USD to be withdrawn or traded at anytime. 
 
 
 ## Getting Started

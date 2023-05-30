@@ -32,10 +32,10 @@ export default function Header() {
     }
   };
 
-  const onMenuClick = (e) => {
+  const onMenuClick = async (e) => {
     if (e.detail.id === 'signout') {
-      signout();
-      router.push('/');
+      await signout();
+      await router.push('/');
     }
   };
 
@@ -53,11 +53,11 @@ export default function Header() {
       utilities={[
         {
           type: 'menu-dropdown',
-          text: name ? userProfile?.name : 'Sign in',
+          text: name ? userProfile?.name : '',
           iconName: 'user-profile',
           iconAlign: 'right',
-          onItemClick: onMenuClick,
-          items: [{ id: 'signout', text: 'Sign out' }],
+          onItemClick: name ? onMenuClick : null,
+          items: name ? [{ id: 'signout', text: 'Sign out' }] : [],
         },
       ]}
       i18nStrings={{

@@ -50,7 +50,6 @@ function AssetInfo(props) {
   return (
     <Container className="assetInfoContainer">
       <HelpPanel
-        footer="footer content here"
         header={
           <Header
             actions={

@@ -2,7 +2,7 @@
 
 .vscode
 .eslintrc.json
-
+.env
 # dependencies
 /node_modules
 /.pnp

@@ -1,22 +1,13 @@
+import { makeCall } from '../retailClient';
+
 export default async function orders(req, res) {
   const { query } = req;
   const { token, product_id, side, quote_size, asset } = query;
-  let targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
-
+  let path = `/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
   if (req.method === 'GET') {
     // Handle a GET request
     try {
-      const getOrders = await fetch(targetUrl, {
-        credentials: 'include',
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'CB-VERSION': '2015-04-08',
-          Authorization: 'Bearer ' + token,
-        },
-      });
-
+      const getOrders = await makeCall(token, path);
       const response = await getOrders.json();
       const fills = response.fills;
 

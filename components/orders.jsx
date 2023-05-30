@@ -28,7 +28,6 @@ function Orders(props) {
   const token = props.token;
   const [detailsModal, setDetailsModal] = useState(false);
 
-  console.log(order);
   useEffect(() => {
     if (userOrders !== []) {
       getOrders(token, walletId, asset);
