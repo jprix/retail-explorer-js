@@ -1,22 +1,15 @@
+import { makeCall } from '../retailClient';
+
 export default async function OrderById(req, res) {
   const { query } = req;
 
   const { token, account_id, id } = query;
   console.log(token, id);
-  let targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders/historical/${id}`;
+  let path = `/api/v3/brokerage/orders/historical/${id}`;
 
   if (req.method === 'GET') {
     try {
-      const getOrderById = await fetch(targetUrl, {
-        credentials: 'include',
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'CB-VERSION': '2015-04-08',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const getOrderById = await makeCall(token, path);
 
       const response = await getOrderById.json();
       const userOrder = response.order;
