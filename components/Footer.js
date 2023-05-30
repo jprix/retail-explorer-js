@@ -21,10 +21,7 @@ export default function Footer() {
   return (
     <div>
       <footer className={styles.footer}>
-        <p>Copyright &copy; Coin Auth 2022</p>
-        <p>
-          <Link href={'/about'}>About us</Link>
-        </p>
+        <p>Copyright &copy; Coin Auth 2023</p>
       </footer>
     </div>
   );
