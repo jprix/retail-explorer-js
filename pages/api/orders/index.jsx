@@ -34,17 +34,7 @@ export default async function orders(req, res) {
     console.log('hit body', payload);
     targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders`;
     try {
-      const initiateExecuteOrder = await fetch(targetUrl, {
-        credentials: 'include',
-        method: 'POST',
-        withCredentials: true,
-        body: payload,
-        headers: {
-          Accept: 'application/json',
-          'CB-VERSION': '2015-04-08',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const initiateExecuteOrder = await makeCall(token, path, payload);
 
       const response = await initiateExecuteOrder.json();
 

@@ -1,24 +1,16 @@
+import { makeCall } from '../retailClient';
+
 export default async function listAccounts(req, res) {
   const { query } = req;
 
   const { token } = query;
-  let targetUrl = `https://api.coinbase.com/v2/accounts`;
+  let path = `/v2/accounts`;
 
   if (req.method === 'GET') {
     // Handle a GET request
     try {
-      const getAccounts = await fetch(targetUrl, {
-        credentials: 'include',
-        method: 'GET',
-        withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'CB-VERSION': '2015-04-08',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const getAccounts = await makeCall(token, path);
 
-      console.log(getAccounts);
       const response = await getAccounts.json();
       const userAccounts = response.data;
 

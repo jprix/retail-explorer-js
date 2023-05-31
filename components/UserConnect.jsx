@@ -11,6 +11,11 @@ import {
 export function UserConnect(props) {
   const [connectModal, setConnectModal] = useState(false);
   const [selectedScopeOptions, setSelectedScopeOptions] = React.useState([]);
+
+  const redirectUri = process.env.NEXT_PUBLIC_REDIRECT_URI;
+  const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+  const OAUTH_BASE_URL = process.env.NEXT_PUBLIC_OAUTH_BASE_URL;
+
   useEffect(() => {
     if (window.opener) {
       console.log('window opener ', window.opener);
@@ -20,7 +25,9 @@ export function UserConnect(props) {
   const initiateOauth = () => {
     const scope = selectedScopeOptions.map((scope) => scope.value).join(' ');
     const state = Math.floor(Date.now() / 1000);
-    window.location.href = `https://www.coinbase.com/oauth/authorize?client_id=087facde449a1039b4270e84dde9cd02f170f191394a72deb868c978d2bba803&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=code&scope=${scope}&state=${state}&account=all&meta[account]=all&meta[send_limit_amount]=1.00&meta[send_limit_currency]=USD&meta[send_limit_period]=month`;
+    const authorizeUrl = `${OAUTH_BASE_URL}/oauth/authorize?client_id=${clientId}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=code&scope=${scope}&state=${state}&account=all&meta[account]=all&meta[send_limit_amount]=1.00&meta[send_limit_currency]=USD&meta[send_limit_period]=month`;
+
+    window.location.href = authorizeUrl;
   };
   const closeModal = () => {
     setConnectModal(false);

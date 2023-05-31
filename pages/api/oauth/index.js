@@ -3,16 +3,19 @@ export default async function handler(req, res) {
   if (req.method === 'POST') {
     // Handle a POST request
     const { query } = req;
+    const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+    const clientSecret = process.env.NEXT_PUBLIC_CLIENT_SECRET;
+    const redirectUri = process.env.NEXT_PUBLIC_ENCODED_REDIRECT_URL;
+    const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_BASE_URL;
+
     console.log('this is the query ', query.code);
-    const targetUrl = `https://api.coinbase.com/oauth/token`;
+    const targetUrl = `${oauthUrl}/oauth/token`;
     const payload = {
       grant_type: 'authorization_code',
       code: query.code,
-      client_id:
-        '087facde449a1039b4270e84dde9cd02f170f191394a72deb868c978d2bba803',
-      client_secret:
-        'ab180bdfce5e26c25e4b563253d59499a1e16abee7d8ab99fcf8bdd89e6897d5',
-      redirect_uri: 'http://localhost:3000/',
+      client_id: clientId,
+      client_secret: clientSecret,
+      redirect_uri: redirectUri,
     };
     try {
       const tokenResponse = await fetch(targetUrl, {
