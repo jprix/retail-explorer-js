@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useContext, useEffect } from 'react';
 import { AssetContext } from '../context/assetContext';
+import { OrdersContext } from '../context/ordersContext';
 import { Icons } from '../utils/Icons';
 
 import {
@@ -21,6 +22,7 @@ function AssetInfo(props) {
     getAssets,
     asset,
   } = useContext(AssetContext);
+  const { userOrders } = useContext(OrdersContext);
 
   const token = props.token;
   const closeTradeModal = () => {
@@ -32,7 +34,7 @@ function AssetInfo(props) {
       console.log('making assets call');
       getAssets(token);
     }
-  }, [asset]);
+  }, [asset, userOrders]);
 
   const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   const [tradeModal, setTradeModal] = React.useState(false);
