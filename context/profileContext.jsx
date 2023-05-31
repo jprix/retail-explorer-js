@@ -30,6 +30,7 @@ const ProfileProvider = ({ children }) => {
     userProfile,
     profileLoading,
     getProfile,
+    setUserProfile,
   };
 
   return (

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { UserContext } from '../context/UserContext';
 
 export default function Header() {
-  const { userProfile } = useContext(ProfileContext);
+  const { userProfile, setUserProfile } = useContext(ProfileContext);
   const router = useRouter();
   const { setAuthToken, authToken } = useContext(UserContext);
 
@@ -26,7 +26,6 @@ export default function Header() {
       );
       const data = await revokeResponse.json();
       setAuthToken([]);
-      console.log('this is the data ', data);
     } catch (error) {
       console.log('this was the token error', error);
     }
@@ -35,6 +34,7 @@ export default function Header() {
   const onMenuClick = async (e) => {
     if (e.detail.id === 'signout') {
       await signout();
+      setUserProfile({});
       await router.push('/');
     }
   };
