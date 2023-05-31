@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-
+import { assetMenuList } from '../utils/assetsList';
 import {
   Button,
   Modal,
@@ -59,12 +59,7 @@ export function AssetSwitcher(props) {
       <Select
         selectedOption={selectedAssetOption}
         onChange={({ detail }) => setSelectedAssetOption(detail.selectedOption)}
-        options={[
-          { label: 'ETH-USD', value: 'ETH' },
-          { label: 'BTC-USD', value: 'BTC' },
-          { label: 'DOGE-USD', value: 'DOGE' },
-          { label: 'MATIC-USD', value: 'MATIC' },
-        ]}
+        options={assetMenuList}
         selectedAriaLabel="Selected"
       />
     </Modal>
