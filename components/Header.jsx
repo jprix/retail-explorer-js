@@ -45,7 +45,7 @@ export default function Header() {
         href: '/',
         title: 'Coin Auth',
         logo: {
-          src: '/rose-interiors-logo.png',
+          src: '../images/rose-interiors-logo.png',
           alt: 'rose-interiors-logo',
           onClick: handleLogoClick,
         },
