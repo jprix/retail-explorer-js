@@ -63,7 +63,7 @@ export function TradeForm(props) {
       const order = await createOrder(
         token,
         asset,
-        quantity,
+        selectedOrderSide.value === 'SELL' ? baseCurrency : quantity,
         selectedOrderSide.value
       );
       alert(order);
@@ -80,7 +80,7 @@ export function TradeForm(props) {
       onDismiss={closeModal}
       visible={props.open}
       closeAriaLabel="Close modal"
-      header="Place order1"
+      header="Place order"
     >
       {/* <h3>Please select the asset you would like to view:</h3> */}
       {placingOrder ? <Spinner /> : null}
@@ -102,18 +102,20 @@ export function TradeForm(props) {
             </Box>
           }
         >
-          <Select
-            label="Choose Ordet Type"
-            selectedOption={selectedOrderType}
-            onChange={({ detail }) =>
-              setSelectedOrderType(detail.selectedOption)
-            }
-            options={[
-              { label: 'MARKET', value: 'MARKET' },
-              { label: 'LIMIT', value: 'LIMIT' },
-            ]}
-            selectedAriaLabel="Selected Order Type"
-          />
+          <FormField label="Order Type" id="oType" errorText={error}>
+            <Select
+              label="Choose Order Type"
+              selectedOption={selectedOrderType}
+              onChange={({ detail }) =>
+                setSelectedOrderType(detail.selectedOption)
+              }
+              options={[
+                { label: 'MARKET', value: 'MARKET' },
+                { label: 'LIMIT', value: 'LIMIT' },
+              ]}
+              selectedAriaLabel="Selected Order Type"
+            />
+          </FormField>
           <SpaceBetween direction="horizontal" size="xs">
             <Select
               label="Side"

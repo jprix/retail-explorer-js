@@ -118,7 +118,7 @@ function Orders(props) {
             <Box float="right">
               <SpaceBetween direction="horizontal" size="xs">
                 <Button variant="link" onClick={closeModal}>
-                  Cancel
+                  Close
                 </Button>
               </SpaceBetween>
             </Box>

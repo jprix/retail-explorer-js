@@ -69,18 +69,24 @@ const OrdersProvider = ({ children }) => {
   };
 
   const createOrder = async (token, product_id, quote_size, side) => {
+    let path;
     try {
-      setPlacingOrder(true);
-      const createOrderResponse = await fetch(
-        `/api/orders?token=${token}&product_id=${product_id}-USD&quote_size=${quote_size}&side=${side}`,
-        {
-          method: 'POST',
-        }
-      );
+      if (side === 'SELL') {
+        path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}`;
+      } else {
+        path = `/api/orders?token=${token}&product_id=${product_id}-USD&quote_size=${quote_size}&side=${side}`;
+      }
 
+      console.log('this is the amount', quote_size);
+
+      setPlacingOrder(true);
+      const createOrderResponse = await fetch(path, {
+        method: 'POST',
+      });
       const data = await createOrderResponse.json();
 
       setUserOrder(data);
+      setUserOrders((prevOrders) => [...prevOrders, data]);
       setPlacingOrderLoading(false);
       setPlacingOrder(false);
     } catch (error) {

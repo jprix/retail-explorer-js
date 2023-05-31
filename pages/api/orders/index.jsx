@@ -2,7 +2,7 @@ import { makeCall } from '../retailClient';
 
 export default async function orders(req, res) {
   const { query } = req;
-  const { token, product_id, side, quote_size, asset } = query;
+  const { token, product_id, side, base_size, quote_size, asset } = query;
   let path = `/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
   if (req.method === 'GET') {
     // Handle a GET request
@@ -25,16 +25,16 @@ export default async function orders(req, res) {
       side,
       order_configuration: {
         market_market_ioc: {
-          quote_size,
+          ...(side === 'BUY' ? { quote_size } : { base_size }),
         },
       },
     };
 
     let payload = JSON.stringify(body);
     console.log('hit body', payload);
-    targetUrl = `https://api.coinbase.com/api/v3/brokerage/orders`;
+    path = '/api/v3/brokerage/orders';
     try {
-      const initiateExecuteOrder = await makeCall(token, path, payload);
+      const initiateExecuteOrder = await makeCall(token, path, 'POST', payload);
 
       const response = await initiateExecuteOrder.json();
 
