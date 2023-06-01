@@ -23,6 +23,7 @@ export function TradeForm(props) {
   const [quantity, setQuantity] = React.useState('1');
   const [error, setError] = React.useState('');
   const [baseCurrency, setBaseCurrency] = React.useState(0);
+  const [limitPrice, setLimitPrice] = React.useState(price);
 
   const [selectedOrderType, setSelectedOrderType] = useState({
     label: 'MARKET',
@@ -56,6 +57,16 @@ export function TradeForm(props) {
     }
   };
 
+  const handlePrice = (price) => {
+    const decimalRegex = /^\d+(\.\d+)?$/;
+    if (decimalRegex.test(price)) {
+      setLimitPrice(price);
+      setError('');
+    } else {
+      setError('Please enter a valid number');
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     console.log('form submitted');
@@ -64,7 +75,9 @@ export function TradeForm(props) {
         token,
         asset,
         selectedOrderSide.value === 'SELL' ? baseCurrency : quantity,
-        selectedOrderSide.value
+        selectedOrderSide.value,
+        selectedOrderType.value,
+        limitPrice
       );
       alert(order);
       closeModal();
@@ -136,7 +149,7 @@ export function TradeForm(props) {
                 <Input
                   id="price"
                   onChange={({ detail }) => handlePrice(detail.value)}
-                  value={price}
+                  value={limitPrice}
                 />
               </FormField>
             ) : null}

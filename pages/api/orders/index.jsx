@@ -2,7 +2,16 @@ import { makeCall } from '../retailClient';
 
 export default async function orders(req, res) {
   const { query } = req;
-  const { token, product_id, side, base_size, quote_size, asset } = query;
+  const {
+    token,
+    product_id,
+    side,
+    base_size,
+    quote_size,
+    asset,
+    type,
+    limitPrice,
+  } = query;
   let path = `/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
   if (req.method === 'GET') {
     // Handle a GET request
@@ -18,6 +27,19 @@ export default async function orders(req, res) {
     }
   } else if (req.method === 'POST') {
     const clientOrderId = Math.random().toString();
+    if (type == 'LIMIT') {
+      const body = {
+        clientOrderId,
+        product_id,
+        side,
+        order_configuration: {
+          limit_limitt_ioc: {
+            ...(side === 'BUY' ? { quote_size } : { base_size }),
+            limit_price: limitPrice,
+          },
+        },
+      };
+    }
 
     const body = {
       clientOrderId,
