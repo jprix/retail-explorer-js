@@ -29,15 +29,32 @@ function AssetInfo(props) {
     setTradeModal(false);
   };
 
-  useEffect(() => {
-    if (userAssets.length === 0) {
-      console.log('making assets call');
-      getAssets(token);
-    }
-  }, [asset, userOrders]);
-
   const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   const [tradeModal, setTradeModal] = React.useState(false);
+  const [product, setProduct] = React.useState(0);
+
+  useEffect(() => {
+    if (userAssets.length === 0) {
+      console.log('making assets call', userAssets);
+      getAssets(token);
+      console.log('this is the asset', asset);
+    }
+
+    const fetchProduct = async () => {
+      const path = `/api/products/${asset}-USD?token=${token}`;
+      try {
+        const productResponse = await fetch(path, {
+          method: 'GET',
+        });
+        const productData = await productResponse.json();
+        setProduct(productData);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
+
+    fetchProduct();
+  }, [asset, userOrders]);
 
   const handleTransfer = () => {
     console.log('Transfer action');
@@ -71,6 +88,8 @@ function AssetInfo(props) {
         <ColumnLayout variant="text-grid" borders="horizontal" columns={2}>
           <h4>Name:</h4>
           {assetInfo[0]?.name}
+          <h4>Last Price:</h4>
+          {product.price}
           <h4>ID:</h4>
           {assetInfo[0]?.id}
           <h4>Holds:</h4>
@@ -80,7 +99,12 @@ function AssetInfo(props) {
         </ColumnLayout>
       </HelpPanel>
       {tradeModal ? (
-        <TradeForm token={token} open={tradeModal} close={closeTradeModal} />
+        <TradeForm
+          token={token}
+          price={product.price}
+          open={tradeModal}
+          close={closeTradeModal}
+        />
       ) : null}
     </Container>
   );

@@ -5,9 +5,7 @@ export const makeCall = async (
   body = ''
 ) => {
   const baseUrl = process.env.BASE_URL;
-  console.log(process.env.CLIENT_ID);
   const targetUrl = `${baseUrl}${path}`;
-  console.log('this is the target url', targetUrl);
   const headers = {
     Accept: 'application/json',
     'CB-VERSION': '2015-04-08',
