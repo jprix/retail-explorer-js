@@ -6,13 +6,14 @@ export default async function orders(req, res) {
     token,
     product_id,
     side,
-    base_size,
     quote_size,
     asset,
     type,
     limitPrice,
+    base_size,
   } = query;
   let path = `/api/v3/brokerage/orders/historical/fills?product_id=${asset}-USD`;
+  let payload;
   if (req.method === 'GET') {
     // Handle a GET request
     try {
@@ -27,32 +28,34 @@ export default async function orders(req, res) {
     }
   } else if (req.method === 'POST') {
     const clientOrderId = Math.random().toString();
-    if (type == 'LIMIT') {
+    if (type === 'LIMIT') {
       const body = {
         clientOrderId,
         product_id,
         side,
         order_configuration: {
-          limit_limitt_ioc: {
-            ...(side === 'BUY' ? { quote_size } : { base_size }),
+          limit_limit_gtc: {
+            base_size: quote_size,
             limit_price: limitPrice,
           },
         },
       };
+      payload = JSON.stringify(body);
+      console.log('limit body', payload);
+    } else {
+      const body = {
+        clientOrderId,
+        product_id,
+        side,
+        order_configuration: {
+          market_market_ioc: {
+            ...(side === 'BUY' ? { quote_size } : { base_size }),
+          },
+        },
+      };
+      payload = JSON.stringify(body);
     }
 
-    const body = {
-      clientOrderId,
-      product_id,
-      side,
-      order_configuration: {
-        market_market_ioc: {
-          ...(side === 'BUY' ? { quote_size } : { base_size }),
-        },
-      },
-    };
-
-    let payload = JSON.stringify(body);
     console.log('hit body', payload);
     path = '/api/v3/brokerage/orders';
     try {

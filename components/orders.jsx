@@ -34,10 +34,6 @@ function Orders(props) {
     }
   }, [asset]); // useEffect now depends on userOrders
 
-  const closeModal = () => {
-    setDetailsModal(false);
-  };
-
   const handleSort = (sortingState) => {
     // using sortingState instead of event
     userOrders(sortingState); // updating userOrders with sorting state
@@ -47,6 +43,14 @@ function Orders(props) {
     setDetailsModal(true);
     setOrderLoading(true);
     await getOrderByID(token, walletId, id);
+  };
+
+  const closeModal = () => {
+    setDetailsModal(false);
+  };
+
+  const cancelOrder = () => {
+    alert('Order Cancelled');
   };
 
   return (
@@ -117,6 +121,9 @@ function Orders(props) {
           footer={
             <Box float="right">
               <SpaceBetween direction="horizontal" size="xs">
+                <Button variant="link" onClick={cancelOrder}>
+                  Cancel Order
+                </Button>
                 <Button variant="link" onClick={closeModal}>
                   Close
                 </Button>

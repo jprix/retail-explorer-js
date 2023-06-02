@@ -25,7 +25,15 @@ export function SelectScopes({
 
     { label: 'wallet:trades:read', value: 'wallet:trades:read' },
     { label: 'wallet:trades:create', value: 'wallet:trades:create' },
+    {
+      label: 'wallet:transactions:transfer',
+      value: 'wallet:transactions:transfer',
+    },
 
+    {
+      label: 'wallet:transactions:send',
+      value: 'wallet:transactions:send',
+    },
     { label: 'wallet:buys:create', value: 'wallet:buys:create' },
     { label: 'wallet:deposits:read', value: 'wallet:deposits:read' },
     { label: 'wallet:deposits:create', value: 'wallet:deposits:create' },

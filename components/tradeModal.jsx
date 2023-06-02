@@ -20,7 +20,7 @@ export function TradeForm(props) {
 
   const { token, price } = props;
   const { asset } = useContext(AssetContext);
-  const [quantity, setQuantity] = React.useState('1');
+  const [quoteSize, setQuoteSize] = React.useState('1');
   const [error, setError] = React.useState('');
   const [baseCurrency, setBaseCurrency] = React.useState(0);
   const [limitPrice, setLimitPrice] = React.useState(price);
@@ -39,12 +39,13 @@ export function TradeForm(props) {
     props.close();
   };
 
-  const handleQuantity = (qty) => {
-    if (!isNaN(+qty)) {
-      setQuantity(qty);
+  const handleQuoteSize = (quote) => {
+    const decimalRegex = /^\d+(\.\d+)?$/;
+    if (decimalRegex.test(quote)) {
+      setQuoteSize(quote);
       setError('');
     } else {
-      setError('Please enter an integer value');
+      setError('Please enter a valid number');
     }
   };
 
@@ -74,7 +75,10 @@ export function TradeForm(props) {
       const order = await createOrder(
         token,
         asset,
-        selectedOrderSide.value === 'SELL' ? baseCurrency : quantity,
+        selectedOrderSide.value === 'SELL' ||
+          selectedOrderType.value === 'LIMIT'
+          ? baseCurrency
+          : quoteSize,
         selectedOrderSide.value,
         selectedOrderType.value,
         limitPrice
@@ -154,12 +158,13 @@ export function TradeForm(props) {
               </FormField>
             ) : null}
           </SpaceBetween>
-          {selectedOrderSide.value === 'BUY' ? (
-            <FormField label="Quantity" id="quantity" errorText={error}>
+          {selectedOrderSide.value === 'BUY' &&
+          selectedOrderType.value === 'MARKET' ? (
+            <FormField label="quote size" id="quote" errorText={error}>
               <Input
-                id="inputQuantity"
-                onChange={({ detail }) => handleQuantity(detail.value)}
-                value={quantity}
+                id="inputQuouteSize"
+                onChange={({ detail }) => handleQuoteSize(detail.value)}
+                value={quoteSize}
               />
             </FormField>
           ) : (

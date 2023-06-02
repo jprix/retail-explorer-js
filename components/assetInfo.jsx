@@ -54,7 +54,7 @@ function AssetInfo(props) {
     };
 
     fetchProduct();
-  }, [asset, userOrders]);
+  }, [userAssets, asset, userOrders]);
 
   const handleTransfer = () => {
     console.log('Transfer action');

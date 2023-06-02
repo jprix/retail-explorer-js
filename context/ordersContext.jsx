@@ -77,11 +77,12 @@ const OrdersProvider = ({ children }) => {
     limitPrice = ''
   ) => {
     let path;
+    console.log('limit price', limitPrice);
     try {
       if (side === 'SELL') {
-        path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}&type=${type}&liimtPrice=${limitPrice}`;
+        path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}&type=${type}&limtiPrice=${limitPrice}`;
       } else {
-        path = `/api/orders?token=${token}&product_id=${product_id}-USD&quote_size=${quote_size}&side=${side}&type=${type}&liimtPrice=${limitPrice}`;
+        path = `/api/orders?token=${token}&product_id=${product_id}-USD&quote_size=${quote_size}&side=${side}&type=${type}&limitPrice=${limitPrice}`;
       }
 
       setPlacingOrder(true);
