@@ -5,7 +5,8 @@ export const makeCall = async (
   body = ''
 ) => {
   const baseUrl = process.env.BASE_URL;
-  const targetUrl = `${baseUrl}${path}`;
+
+  const targetUrl = `https://api.coinbase.com${path}`;
   const headers = {
     Accept: 'application/json',
     'CB-VERSION': '2015-04-08',
@@ -23,6 +24,7 @@ export const makeCall = async (
       return callRetail;
     } else {
       console.log('this is the target url', targetUrl);
+      console.log('this is the base url', baseUrl);
       const callRetail = await fetch(targetUrl, {
         method,
         credentials: 'include',

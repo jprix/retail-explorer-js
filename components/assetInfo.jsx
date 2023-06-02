@@ -33,11 +33,16 @@ function AssetInfo(props) {
   const [tradeModal, setTradeModal] = React.useState(false);
   const [product, setProduct] = React.useState(0);
 
+  const [initialFetchCompleted, setInitialFetchCompleted] =
+    React.useState(false);
+
   useEffect(() => {
-    if (userAssets.length === 0) {
+    if (userAssets.length === 0 || (userOrders && !initialFetchCompleted)) {
       console.log('making assets call', userAssets);
       getAssets(token);
       console.log('this is the asset', asset);
+
+      setInitialFetchCompleted(true);
     }
 
     const fetchProduct = async () => {
@@ -54,7 +59,7 @@ function AssetInfo(props) {
     };
 
     fetchProduct();
-  }, [userAssets, asset, userOrders]);
+  }, [userAssets.length, userAssets, userOrders, asset, initialFetchCompleted]);
 
   const handleTransfer = () => {
     console.log('Transfer action');

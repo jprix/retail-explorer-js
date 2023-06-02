@@ -22,7 +22,7 @@ export function TradeForm(props) {
   const { asset } = useContext(AssetContext);
   const [quoteSize, setQuoteSize] = React.useState('1');
   const [error, setError] = React.useState('');
-  const [baseCurrency, setBaseCurrency] = React.useState(0);
+  const [baseCurrency, setBaseCurrency] = React.useState(5);
   const [limitPrice, setLimitPrice] = React.useState(price);
 
   const [selectedOrderType, setSelectedOrderType] = useState({
