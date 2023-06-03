@@ -3,6 +3,8 @@ import { useContext, useEffect } from 'react';
 import { AssetContext } from '../context/assetContext';
 import { OrdersContext } from '../context/ordersContext';
 import { Icons } from '../utils/Icons';
+import { TradeForm } from './TradeModal';
+import { ReceiveForm } from './ReceiveModal';
 
 import {
   HelpPanel,
@@ -14,7 +16,7 @@ import {
   Container,
   SpaceBetween,
 } from '@cloudscape-design/components';
-import { TradeForm } from './TradeModal';
+
 function AssetInfo(props) {
   const {
     userAssets,
@@ -22,47 +24,59 @@ function AssetInfo(props) {
     getAssets,
     asset,
   } = useContext(AssetContext);
-  const { userOrders } = useContext(OrdersContext);
+  const { userOrders, userOpenOrders } = useContext(OrdersContext);
 
   const token = props.token;
   const closeTradeModal = () => {
     setTradeModal(false);
+    setReceiveModal(false);
   };
 
   const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   const [tradeModal, setTradeModal] = React.useState(false);
+  const [receiveModal, setReceiveModal] = React.useState(false);
+
   const [product, setProduct] = React.useState(0);
 
   const [initialFetchCompleted, setInitialFetchCompleted] =
     React.useState(false);
 
+  const fetchProduct = async () => {
+    const path = `/api/products/${asset}-USD?token=${token}`;
+    try {
+      const productResponse = await fetch(path, {
+        method: 'GET',
+      });
+      const productData = await productResponse.json();
+      setProduct(productData);
+    } catch (error) {
+      console.error('Error fetching product:', error);
+    }
+  };
+
   useEffect(() => {
     if (userAssets.length === 0 || (userOrders && !initialFetchCompleted)) {
-      console.log('making assets call', userAssets);
       getAssets(token);
-      console.log('this is the asset', asset);
-
+      fetchProduct();
       setInitialFetchCompleted(true);
     }
+  }, [
+    userAssets.length,
+    userAssets,
+    userOpenOrders,
+    userOrders,
+    asset,
+    initialFetchCompleted,
+  ]);
 
-    const fetchProduct = async () => {
-      const path = `/api/products/${asset}-USD?token=${token}`;
-      try {
-        const productResponse = await fetch(path, {
-          method: 'GET',
-        });
-        const productData = await productResponse.json();
-        setProduct(productData);
-      } catch (error) {
-        console.error('Error fetching product:', error);
-      }
-    };
+  const handleSend = () => {
+    console.log('Send action');
+    // code to execute the 'transfer' action
+  };
 
-    fetchProduct();
-  }, [userAssets.length, userAssets, userOrders, asset, initialFetchCompleted]);
-
-  const handleTransfer = () => {
-    console.log('Transfer action');
+  const handleReceive = () => {
+    console.log('Receive action');
+    setReceiveModal(true);
     // code to execute the 'transfer' action
   };
 
@@ -79,7 +93,8 @@ function AssetInfo(props) {
             actions={
               <SpaceBetween direction="horizontal" size="xs">
                 <Button onClick={handleTrade}>Trade</Button>
-                <Button>Transfer</Button>
+                <Button onClick={handleSend}>Send</Button>
+                <Button onClick={handleReceive}>Receive</Button>
               </SpaceBetween>
             }
           >
@@ -108,6 +123,14 @@ function AssetInfo(props) {
           token={token}
           price={product.price}
           open={tradeModal}
+          close={closeTradeModal}
+        />
+      ) : null}
+
+      {receiveModal ? (
+        <ReceiveForm
+          token={token}
+          open={receiveModal}
           close={closeTradeModal}
         />
       ) : null}

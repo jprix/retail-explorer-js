@@ -6,6 +6,7 @@ import Layout from '../components/Layouts';
 import { gridDefinition } from '../utils/grids';
 import Profile from '../components/profile';
 import Orders from '../components/orders';
+import OpenOrders from '../components/openOrders';
 import AssetInfo from '../components/assetInfo';
 import { AssetSwitcher } from '../components/assetSwitcher';
 import { AssetContext } from '../context/assetContext';
@@ -56,6 +57,12 @@ export function Landing() {
             header={<Header variant="h2">Your Orders</Header>}
           >
             {asset !== '' ? <Orders token={token} /> : null}
+          </Container>
+          <Container
+            className="openOrdersContainer"
+            header={<Header variant="h2">Your Open Orders</Header>}
+          >
+            {asset !== '' ? <OpenOrders token={token} /> : null}
           </Container>
         </>
       </Grid>

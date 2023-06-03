@@ -7,8 +7,12 @@ export const OrdersContext = createContext(defaultState);
 const OrdersProvider = ({ children }) => {
   const [ordersLoading, setOrdersLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
+  const [fetchingOpenOrders, setFetchingOpenOrders] = useState(false);
   const [userOrders, setUserOrders] = useState([]);
   const [orderLoading, setOrderLoading] = useState(true);
+  const [openOrdersLoading, setOpenOrdersLoading] = useState(true);
+  const [userOpenOrders, setUserOpenOrders] = useState([]);
+  const [openOrdersLoaded, setOpenOrdersLoaded] = useState(true);
   const [order, setOrder] = useState({});
   const [orderFetching, setOrderFetching] = useState(false);
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -68,6 +72,33 @@ const OrdersProvider = ({ children }) => {
     }
   };
 
+  const getOpenOrders = async (token, asset) => {
+    if (fetching && userOpenOrders === [] && openOrdersLoading) {
+      return;
+    }
+
+    try {
+      setFetchingOpenOrders(true);
+      setOpenOrdersLoading(true);
+
+      const orderResponse = await fetch(
+        `/api/orders/open?token=${token}&product_id=${asset}`,
+        {
+          method: 'GET',
+        }
+      );
+      const data = await orderResponse.json();
+
+      setUserOpenOrders(data);
+      setOrdersLoading(false);
+      setFetchingOpenOrders(false);
+    } catch (error) {
+      console.log('error', error);
+      setOpenOrdersLoading(false);
+      setFetchingOpenOrders(false);
+    }
+  };
+
   const createOrder = async (
     token,
     product_id,
@@ -115,6 +146,11 @@ const OrdersProvider = ({ children }) => {
     order,
     orderLoading,
     setOrderLoading,
+    userOpenOrders,
+    openOrdersLoading,
+    getOpenOrders,
+    openOrdersLoaded,
+    setOpenOrdersLoaded,
   };
 
   return (
