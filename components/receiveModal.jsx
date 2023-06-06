@@ -38,8 +38,8 @@ export function ReceiveForm(props) {
         method: 'POST',
       });
       const response = await createAddressResponse.json();
-      setAddress(response[0]);
-      console.log('this is the adddress, ', address[0].address);
+      setAddress(response);
+      console.log('this is the adddress, ', response.address);
     } catch (error) {
       console.log('error', error);
 
@@ -66,9 +66,11 @@ export function ReceiveForm(props) {
                   Close
                 </Button>
                 <SpaceBetween id="formLabel" direction="horizontal" size="xs">
-                  <Button id="submit" variant="primary">
-                    Generate Address
-                  </Button>
+                  {Object.keys(address).length === 0 ? (
+                    <Button id="submit" variant="primary">
+                      Generate Address
+                    </Button>
+                  ) : null}
                 </SpaceBetween>
               </SpaceBetween>
             </Box>
@@ -78,10 +80,10 @@ export function ReceiveForm(props) {
             <p>Would you like to generate a {asset} address?</p>
             {Object.keys(address).length !== 0 ? (
               <div>
-                <p>Address:</p>
+                <p>
+                  <b>Use this address to receive {asset}:</b>
+                </p>
                 <p>{address.address}</p>
-                <p>Title</p>
-                <p>{address.warnings.title}</p>
               </div>
             ) : null}
           </div>

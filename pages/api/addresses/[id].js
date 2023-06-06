@@ -7,9 +7,8 @@ export default async function createAddress(req, res) {
   let path = `/v2/accounts/${id}/addresses`;
 
   if (req.method === 'POST') {
-    // Handle a GET request
     try {
-      const generateAddress = await makeCall(token, path);
+      const generateAddress = await makeCall(token, path, 'POST');
       const response = await generateAddress.json();
       const newAddress = response.data;
 

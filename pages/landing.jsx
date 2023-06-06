@@ -1,4 +1,10 @@
-import { Container, Grid, Header, Button } from '@cloudscape-design/components';
+import {
+  Container,
+  Grid,
+  Header,
+  Button,
+  Tabs,
+} from '@cloudscape-design/components';
 import { useContext, useEffect, useState } from 'react'; // Import useState
 import { UserContext } from '../context/UserContext';
 import { useRouter } from 'next/router';
@@ -54,15 +60,22 @@ export function Landing() {
           </Container>
           <Container
             className="ordersContainer"
-            header={<Header variant="h2">Your Orders</Header>}
+            header={<Header variant="h2">Your Actions</Header>}
           >
-            {asset !== '' ? <Orders token={token} /> : null}
-          </Container>
-          <Container
-            className="openOrdersContainer"
-            header={<Header variant="h2">Your Open Orders</Header>}
-          >
-            {asset !== '' ? <OpenOrders token={token} /> : null}
+            <Tabs
+              tabs={[
+                {
+                  label: 'Filled Orders',
+                  id: 'filled',
+                  content: asset !== '' ? <Orders token={token} /> : null,
+                },
+                {
+                  label: 'Open Orders',
+                  id: 'open',
+                  content: asset !== '' ? <OpenOrders token={token} /> : null,
+                },
+              ]}
+            />
           </Container>
         </>
       </Grid>
