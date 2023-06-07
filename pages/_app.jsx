@@ -20,6 +20,7 @@ import UserProvider from '../context/UserContext';
 import ProfileProvider from '../context/profileContext';
 import OrdersProvider from '../context/ordersContext';
 import AssetProvider from '../context/assetContext';
+import TransactionsProvider from '../context/transactionsContext';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -27,7 +28,9 @@ function MyApp({ Component, pageProps }) {
       <ProfileProvider>
         <AssetProvider>
           <OrdersProvider>
-            <Component {...pageProps} />
+            <TransactionsProvider>
+              <Component {...pageProps} />
+            </TransactionsProvider>
           </OrdersProvider>
         </AssetProvider>
       </ProfileProvider>

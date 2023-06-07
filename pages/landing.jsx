@@ -14,6 +14,7 @@ import Profile from '../components/profile';
 import Orders from '../components/orders';
 import OpenOrders from '../components/openOrders';
 import AssetInfo from '../components/assetInfo';
+import Transactions from '../components/transactions';
 import { AssetSwitcher } from '../components/assetSwitcher';
 import { AssetContext } from '../context/assetContext';
 
@@ -59,8 +60,8 @@ export function Landing() {
             <Profile token={token} />
           </Container>
           <Container
-            className="ordersContainer"
-            header={<Header variant="h2">Your Actions</Header>}
+            className="resourcesContainer"
+            header={<Header variant="h2">Resources</Header>}
           >
             <Tabs
               tabs={[
@@ -73,6 +74,14 @@ export function Landing() {
                   label: 'Open Orders',
                   id: 'open',
                   content: asset !== '' ? <OpenOrders token={token} /> : null,
+                },
+                {
+                  label: 'Transactions',
+                  id: 'transactions',
+                  content:
+                    asset !== '' ? (
+                      <Transactions token={token} asset={asset} />
+                    ) : null,
                 },
               ]}
             />
