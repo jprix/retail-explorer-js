@@ -22,9 +22,9 @@ function OpenOrders(props) {
     setOrderLoading,
   } = useContext(OrdersContext);
 
-  const { userAssets, asset } = useContext(AssetContext);
-  const assetObject = userAssets.filter((obj) => obj.currency === asset);
-  const walletId = assetObject[0]?.id;
+  const { userAsset, asset } = useContext(AssetContext);
+  const assetObject = userAsset;
+  const walletId = assetObject?.id;
   const token = props.token;
   const [detailsModal, setDetailsModal] = useState(false);
 

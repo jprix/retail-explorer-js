@@ -20,9 +20,10 @@ import {
 
 function AssetInfo(props) {
   const {
-    userAssets,
-    assetsLoading: assetLoaded,
-    getAssets,
+    userAsset,
+    selectedAsset,
+    assetLoading: assetLoaded,
+    getAsset,
     asset,
   } = useContext(AssetContext);
   const { userOrders, userOpenOrders } = useContext(OrdersContext);
@@ -34,7 +35,6 @@ function AssetInfo(props) {
     setSendModal(false);
   };
 
-  const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   const [tradeModal, setTradeModal] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
   const [sendModal, setSendModal] = React.useState(false);
@@ -58,17 +58,19 @@ function AssetInfo(props) {
   };
 
   useEffect(() => {
-    if (userAssets.length === 0 || (userOrders && !initialFetchCompleted)) {
-      getAssets(token);
+    if (userAsset.length === 0 || (userOrders && !initialFetchCompleted)) {
+      getAsset(token, asset);
+      console.log('gettting asset');
       fetchProduct();
       setInitialFetchCompleted(true);
     }
   }, [
-    userAssets.length,
-    userAssets,
+    userAsset.length,
+    userAsset,
     userOpenOrders,
     userOrders,
     asset,
+    selectedAsset,
     initialFetchCompleted,
   ]);
 
@@ -103,23 +105,23 @@ function AssetInfo(props) {
             }
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Icons asset={assetInfo[0]?.currency} /> {assetInfo[0]?.currency}{' '}
-              Wallet Info
+              <Icons asset={userAsset?.currency} /> {userAsset?.currency} Wallet
+              Info
             </div>
           </Header>
         }
       >
         <ColumnLayout variant="text-grid" borders="horizontal" columns={2}>
           <h4>Name:</h4>
-          {assetInfo[0]?.name}
+          {userAsset?.name}
           <h4>Last Price:</h4>
           {product.price}
           <h4>ID:</h4>
-          {assetInfo[0]?.id}
+          {userAsset?.id}
           <h4>Holds:</h4>
-          {assetInfo[0]?.balance.amount}
+          {userAsset?.balance?.amount}
           <h4>USD value:</h4>
-          {assetInfo[0]?.native_balance.amount}
+          {userAsset?.native_balance?.amount}
         </ColumnLayout>
       </HelpPanel>
       {tradeModal ? (

@@ -5,4 +5,5 @@ export const assetMenuList = [
   { label: 'MATIC-USD', value: 'MATIC' },
   { label: 'ADA-USD', value: 'ADA' },
   { label: 'BLUR-USD', value: 'BLUR' },
+  { label: 'FLOW-USD', value: 'FLOW' },
 ];

@@ -5,7 +5,7 @@ export default async function listAccount(req, res) {
   const { token, id } = query;
 
   let path = `/v2/accounts/${id}`;
-
+  console.log('this is the path of account/id', path);
   if (req.method === 'GET') {
     // Handle a GET request
     try {

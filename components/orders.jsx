@@ -22,8 +22,8 @@ function Orders(props) {
     setOrderLoading,
   } = useContext(OrdersContext);
 
-  const { userAssets, asset } = useContext(AssetContext);
-  const assetObject = userAssets.filter((obj) => obj.currency === asset);
+  const { userAsset, asset } = useContext(AssetContext);
+  const assetObject = userAsset;
   const walletId = assetObject[0]?.id;
   const token = props.token;
   const [detailsModal, setDetailsModal] = useState(false);

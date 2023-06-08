@@ -5,34 +5,37 @@ const defaultState = {};
 export const AssetContext = createContext(defaultState);
 
 const AssetProvider = ({ children }) => {
-  const [assetsLoading, setAssetsLoading] = useState(true);
+  const [assetLoading, setAssetLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
 
-  const [userAssets, setUserAssets] = useState([]);
+  const [userAsset, setUserAsset] = useState([]);
   const [asset, setAsset] = useState('');
 
-  const getAssets = async (token) => {
-    if (fetching && userAssets?.name && loading) {
+  const getAsset = async (token, asset) => {
+    if (fetching && assetLoading) {
       return;
     }
     try {
       setFetching(true);
-      setAssetsLoading(true);
+      setAssetLoading(true);
+      console.log('getting asset', asset);
+      const assetResponse = await fetch(
+        `/api/accounts/${asset}?token=${token}`,
+        {
+          method: 'GET',
+        }
+      );
 
-      const assetsResponse = await fetch(`/api/accounts?token=${token}`, {
-        method: 'GET',
-      });
+      const data = await assetResponse.json();
 
-      const data = await assetsResponse.json();
-
-      setUserAssets(data);
-      console.log(userAssets);
-      setAssetsLoading(false);
+      setUserAsset(data);
+      console.log(userAsset);
+      setAssetLoading(false);
       setFetching(false);
     } catch (error) {
       console.log(error);
-      setUserAssets([]);
-      setAssetsLoading(false);
+      setUserAsset([]);
+      setAssetLoading(false);
       setFetching(false);
     }
   };
@@ -42,9 +45,9 @@ const AssetProvider = ({ children }) => {
   };
 
   const state = {
-    userAssets,
-    assetsLoading,
-    getAssets,
+    userAsset,
+    assetLoading,
+    getAsset,
     asset,
     selectedAsset,
     setAsset,

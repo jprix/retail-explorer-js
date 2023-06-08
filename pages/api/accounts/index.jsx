@@ -12,7 +12,7 @@ export default async function listAccounts(req, res) {
       const getAccounts = await makeCall(token, path);
 
       const response = await getAccounts.json();
-      const userAccounts = response.data;
+      const userAccounts = response;
 
       return res.status(200).json(userAccounts);
     } catch (error) {
