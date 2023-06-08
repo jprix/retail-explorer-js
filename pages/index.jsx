@@ -25,7 +25,17 @@ export default function HomePage() {
         router.push(`/landing?token=${token}`);
       }, 3000); // Delay of 1 second before redirecting
     } else {
-      getAuthToken(code);
+      console.log('getting token please wait, setting spinner');
+      setLoading(true);
+      getAuthToken(code)
+        .then(() => {
+          setLoading(false);
+        })
+        .catch((error) => {
+          // Handle any error that occurs during token retrieval
+          setLoading(false);
+          console.error(error);
+        });
     }
   }, [authToken, code]);
 
@@ -38,21 +48,21 @@ export default function HomePage() {
       {loading ? (
         <Spinner size="large" />
       ) : (
-        <>
-          <h1>Welcome to Retail API Explorer!</h1>
-          <p>
-            Please connect your Coinbase Retail Account to explore our Retail
-            APIs.
-          </p>
-          <Button variant="primary" onClick={() => setShowModal(true)}>
-            Connect Coinbase Account
-          </Button>
-
-          {showModal && (
-            <UserConnect open={showModal} close={closePreviewModal} />
-          )}
-        </>
+        !showModal && (
+          <>
+            <h1>Welcome to Retail API Explorer!</h1>
+            <p>
+              Please connect your Coinbase Retail Account to explore our Retail
+              APIs.
+            </p>
+            <Button variant="primary" onClick={() => setShowModal(true)}>
+              Connect Coinbase Account
+            </Button>
+          </>
+        )
       )}
+
+      {showModal && <UserConnect open={showModal} close={closePreviewModal} />}
     </Layout>
   );
 }

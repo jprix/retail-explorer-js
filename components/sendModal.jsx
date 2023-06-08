@@ -4,6 +4,7 @@ import {
   Modal,
   Form,
   Box,
+  Input,
   SpaceBetween,
   FormField,
 } from '@cloudscape-design/components';
@@ -101,7 +102,7 @@ export function SendForm(props) {
           }
         >
           <FormField label="To:" id="to">
-            <input
+            <Input
               type="text"
               id="to"
               name="to"
@@ -110,7 +111,7 @@ export function SendForm(props) {
             />
           </FormField>
           <FormField label="Amount:" id="amount">
-            <input
+            <Input
               type="text"
               id="amount"
               name="amount"
@@ -128,7 +129,7 @@ export function SendForm(props) {
               label="Please enter your SMS 2FA or Authenticator code:"
               id="twoFA"
             >
-              <input
+              <Input
                 type="text"
                 id="twoFA"
                 name="twoFA"

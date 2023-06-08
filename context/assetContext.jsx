@@ -1,10 +1,12 @@
 import React, { useState, useEffect, createContext } from 'react';
-
+import { useRouter } from 'next/router';
 const defaultState = {};
 
 export const AssetContext = createContext(defaultState);
 
 const AssetProvider = ({ children }) => {
+  const router = useRouter();
+
   const [assetLoading, setAssetLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
 
@@ -27,11 +29,15 @@ const AssetProvider = ({ children }) => {
       );
 
       const data = await assetResponse.json();
-
-      setUserAsset(data);
-      console.log(userAsset);
-      setAssetLoading(false);
-      setFetching(false);
+      if (data.errors) {
+        alert('You are not authorized to view this page, please log in');
+        await router.push('/');
+      } else {
+        setUserAsset(data);
+        console.log(userAsset);
+        setAssetLoading(false);
+        setFetching(false);
+      }
     } catch (error) {
       console.log(error);
       setUserAsset([]);

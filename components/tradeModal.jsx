@@ -91,7 +91,7 @@ export function TradeForm(props) {
         );
         closeModal();
       } else {
-        setOrderError(userOrder.error_response.message);
+        setOrderError(userOrder?.error_response?.message);
       }
     } catch (error) {
       console.log('error', error);
@@ -141,9 +141,9 @@ export function TradeForm(props) {
               selectedAriaLabel="Selected Order Type"
             />
           </FormField>
-          <SpaceBetween direction="horizontal" size="xs">
+          <FormField label="Side:" id="side" errorText={error}>
             <Select
-              label="Side"
+              id="selectedSide"
               selectedOption={selectedOrderSide}
               onChange={({ detail }) =>
                 setSelectedOrderSide(detail.selectedOption)
@@ -154,18 +154,16 @@ export function TradeForm(props) {
               ]}
               selectedAriaLabel="Selected Side"
             />
-          </SpaceBetween>
-          <SpaceBetween id="priceLabel" direction="horizontal" size="xs">
-            {selectedOrderType.value === 'LIMIT' ? (
-              <FormField label="Limit Price" id="lPrice" errorText={error}>
-                <Input
-                  id="price"
-                  onChange={({ detail }) => handlePrice(detail.value)}
-                  value={limitPrice}
-                />
-              </FormField>
-            ) : null}
-          </SpaceBetween>
+          </FormField>
+          {selectedOrderType.value === 'LIMIT' ? (
+            <FormField label="Limit Price" id="lPrice" errorText={error}>
+              <Input
+                id="price"
+                onChange={({ detail }) => handlePrice(detail.value)}
+                value={limitPrice}
+              />
+            </FormField>
+          ) : null}
           {selectedOrderSide.value === 'BUY' &&
           selectedOrderType.value === 'MARKET' ? (
             <FormField label="quote size" id="quote" errorText={error}>

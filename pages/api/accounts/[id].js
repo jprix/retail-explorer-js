@@ -5,13 +5,12 @@ export default async function listAccount(req, res) {
   const { token, id } = query;
 
   let path = `/v2/accounts/${id}`;
-  console.log('this is the path of account/id', path);
   if (req.method === 'GET') {
     // Handle a GET request
     try {
       const getAccount = await makeCall(token, path);
       const response = await getAccount.json();
-      console.log(response);
+      console.log('account id api response , ', response);
       const AccountById = response.data;
 
       return res.status(200).json(AccountById);
