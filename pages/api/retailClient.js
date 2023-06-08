@@ -2,37 +2,44 @@ export const makeCall = async (
   token,
   path = '/',
   method = 'GET',
-  body = ''
+  body = '',
+  twoFAcode = ''
 ) => {
   const baseUrl = process.env.BASE_URL;
 
   const targetUrl = `https://api.coinbase.com${path}`;
-  const headers = {
-    Accept: 'application/json',
-    'CB-VERSION': '2015-04-08',
-    Authorization: 'Bearer ' + token,
-  };
+  let headers;
+
+  if (twoFAcode !== '') {
+    headers = {
+      Accept: 'application/json',
+      'CB-VERSION': '2015-04-08',
+      Authorization: 'Bearer ' + token,
+      'CB-2FA-TOKEN': twoFAcode,
+    };
+  } else {
+    headers = {
+      Accept: 'application/json',
+      'CB-VERSION': '2015-04-08',
+      Authorization: 'Bearer ' + token,
+    };
+  }
 
   try {
+    const options = {
+      method,
+      credentials: 'include',
+      headers,
+    };
+
     if (body) {
-      const callRetail = await fetch(targetUrl, {
-        method,
-        body,
-        credentials: 'include',
-        headers,
-      });
-      return callRetail;
-    } else {
-      console.log('this is the target url', targetUrl);
-      console.log('this is the base url', baseUrl);
-      const callRetail = await fetch(targetUrl, {
-        method,
-        credentials: 'include',
-        headers,
-      });
-      console.log('this is the call retail', callRetail);
-      return callRetail;
+      options.body = body;
     }
+
+    const callRetail = await fetch(targetUrl, options);
+    console.log('this is the target url', targetUrl, body);
+    console.log('this is the base url', baseUrl);
+    return callRetail;
   } catch (e) {
     return e;
   }

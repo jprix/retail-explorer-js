@@ -5,6 +5,7 @@ import { OrdersContext } from '../context/ordersContext';
 import { Icons } from '../utils/Icons';
 import { TradeForm } from './TradeModal';
 import { ReceiveForm } from './ReceiveModal';
+import { SendForm } from './SendModal';
 
 import {
   HelpPanel,
@@ -30,11 +31,13 @@ function AssetInfo(props) {
   const closeTradeModal = () => {
     setTradeModal(false);
     setReceiveModal(false);
+    setSendModal(false);
   };
 
   const assetInfo = userAssets.filter((obj) => obj.currency === asset);
   const [tradeModal, setTradeModal] = React.useState(false);
   const [receiveModal, setReceiveModal] = React.useState(false);
+  const [sendModal, setSendModal] = React.useState(false);
 
   const [product, setProduct] = React.useState(0);
 
@@ -71,6 +74,7 @@ function AssetInfo(props) {
 
   const handleSend = () => {
     console.log('Send action');
+    setSendModal(true);
     // code to execute the 'transfer' action
   };
 
@@ -133,6 +137,10 @@ function AssetInfo(props) {
           open={receiveModal}
           close={closeTradeModal}
         />
+      ) : null}
+
+      {sendModal ? (
+        <SendForm token={token} open={sendModal} close={closeTradeModal} />
       ) : null}
     </Container>
   );
