@@ -108,7 +108,6 @@ const OrdersProvider = ({ children }) => {
     limitPrice = ''
   ) => {
     let path;
-    console.log('limit price', limitPrice);
     try {
       if (side === 'SELL') {
         path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}&type=${type}&limtiPrice=${limitPrice}`;
@@ -121,7 +120,6 @@ const OrdersProvider = ({ children }) => {
         method: 'POST',
       });
       const data = await createOrderResponse.json();
-      console.log('this is the order data', data);
       setUserOrder(data);
       setUserOrders((prevOrders) => [...prevOrders, data]);
       setPlacingOrderLoading(false);

@@ -12,7 +12,6 @@ const TransactionsProvider = ({ children }) => {
 
   const getTransactions = async (token, asset) => {
     if (fetching && transactionsLoading && transactions !== []) {
-      console.log('returning');
       return;
     }
     setFetching(true);

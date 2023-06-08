@@ -15,7 +15,6 @@ const UserProvider = ({ children }) => {
   const getAuthToken = async (code) => {
     try {
       if (cachedAuthToken) {
-        console.log('cached token exists');
         router.push(`/landing?token=${cachedAuthToken}`);
       } else {
         const tokenResponse = await fetch(`/api/oauth?code=${code}`, {
@@ -23,7 +22,6 @@ const UserProvider = ({ children }) => {
         });
         const data = await tokenResponse.json();
         setAuthToken(data);
-        console.log('this is the data ', data);
       }
     } catch (error) {
       console.log('this was the token error', error);
