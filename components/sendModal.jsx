@@ -24,24 +24,17 @@ export function SendForm(props) {
     props.close();
   };
 
-  useEffect(() => {
-    console.log('this is the txn details:', sendDetails);
-  }, [sendDetails]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('form submitted', asset, event);
 
     try {
       if (!twoFAReceived) {
-        console.log('hit 2FA received', sendDetails);
         const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
         const createSend2FA = await fetch(path, {
           method: 'POST',
         });
 
         const response = await createSend2FA.json();
-        console.log('2FA sent', response);
         setTwoFAReceived(true);
       } else {
         const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}&twoFAcode=${twoFAcode}`;
@@ -49,7 +42,6 @@ export function SendForm(props) {
           method: 'POST',
         });
         const response = await createSendResponse.json();
-        console.log('hit 2FA not required', sendDetails);
         setTwoFAReceived(false);
         sendDetails(response.data);
       }

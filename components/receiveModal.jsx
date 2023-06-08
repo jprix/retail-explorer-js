@@ -24,13 +24,8 @@ export function ReceiveForm(props) {
     props.close();
   };
 
-  useEffect(() => {
-    console.log('this is the address:', address);
-  }, [address]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('form submitted', asset);
     try {
       const path = `/api/addresses/${asset}?token=${token}`;
 
@@ -39,7 +34,6 @@ export function ReceiveForm(props) {
       });
       const response = await createAddressResponse.json();
       setAddress(response);
-      console.log('this is the adddress, ', response.address);
     } catch (error) {
       console.log('error', error);
 

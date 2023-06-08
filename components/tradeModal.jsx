@@ -71,7 +71,6 @@ export function TradeForm(props) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('form submitted');
     try {
       const order = await createOrder(
         token,
@@ -84,7 +83,6 @@ export function TradeForm(props) {
         selectedOrderType.value,
         limitPrice
       );
-      console.log(userOrder);
       if (userOrder.success === true) {
         alert(
           `Your order success was ${userOrder.success} and your Order Id is ${order.order_id}.`

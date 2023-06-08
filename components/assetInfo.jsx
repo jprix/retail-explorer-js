@@ -61,26 +61,22 @@ function AssetInfo(props) {
     if (userAsset !== {}) {
       getAsset(token, asset);
 
-      console.log('getting asset');
       fetchProduct();
       setInitialFetchCompleted(true);
     }
   }, [asset]);
 
   const handleSend = () => {
-    console.log('Send action');
     setSendModal(true);
     // code to execute the 'transfer' action
   };
 
   const handleReceive = () => {
-    console.log('Receive action');
     setReceiveModal(true);
     // code to execute the 'transfer' action
   };
 
   const handleTrade = () => {
-    console.log('Trade action');
     setTradeModal(true);
   };
 

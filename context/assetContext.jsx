@@ -20,7 +20,6 @@ const AssetProvider = ({ children }) => {
     try {
       setFetching(true);
       setAssetLoading(true);
-      console.log('getting asset', asset);
       const assetResponse = await fetch(
         `/api/accounts/${asset}?token=${token}`,
         {
@@ -34,7 +33,6 @@ const AssetProvider = ({ children }) => {
         await router.push('/');
       } else {
         setUserAsset(data);
-        console.log(userAsset);
         setAssetLoading(false);
         setFetching(false);
       }
