@@ -121,7 +121,7 @@ const OrdersProvider = ({ children }) => {
         method: 'POST',
       });
       const data = await createOrderResponse.json();
-
+      console.log('this is the order data', data);
       setUserOrder(data);
       setUserOrders((prevOrders) => [...prevOrders, data]);
       setPlacingOrderLoading(false);

@@ -13,7 +13,7 @@ function Transactions(props) {
 
   useEffect(() => {
     if (transactions !== []) {
-      console.log('calling transactions context');
+      console.log('calling transactions context', asset);
       getTransactions(token, asset);
     }
   }, [asset]); // useEffect now depends on userOpenOrders

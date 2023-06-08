@@ -121,9 +121,6 @@ function Orders(props) {
           footer={
             <Box float="right">
               <SpaceBetween direction="horizontal" size="xs">
-                <Button variant="link" onClick={cancelOrder}>
-                  Cancel Order
-                </Button>
                 <Button variant="link" onClick={closeModal}>
                   Close
                 </Button>
@@ -153,6 +150,8 @@ function Orders(props) {
                 {order?.order_type}
                 <h4>Fill Value:</h4>
                 {order?.filled_value}
+                <h4>Side:</h4>
+                {order?.side}
                 <h4>Number of Fills:</h4>
                 {order?.number_of_fills}
               </ColumnLayout>

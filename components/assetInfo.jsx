@@ -58,21 +58,14 @@ function AssetInfo(props) {
   };
 
   useEffect(() => {
-    if (userAsset.length === 0 || (userOrders && !initialFetchCompleted)) {
+    if (userAsset !== {}) {
       getAsset(token, asset);
-      console.log('gettting asset');
+
+      console.log('getting asset');
       fetchProduct();
       setInitialFetchCompleted(true);
     }
-  }, [
-    userAsset.length,
-    userAsset,
-    userOpenOrders,
-    userOrders,
-    asset,
-    selectedAsset,
-    initialFetchCompleted,
-  ]);
+  }, [asset]);
 
   const handleSend = () => {
     console.log('Send action');

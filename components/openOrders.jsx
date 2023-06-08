@@ -153,6 +153,8 @@ function OpenOrders(props) {
                 {order?.order_type}
                 <h4>Fill Value:</h4>
                 {order?.filled_value}
+                <h4>Side:</h4>
+                {order?.side}
                 <h4>Number of openOrders:</h4>
                 {order?.number_of_openOrders}
               </ColumnLayout>

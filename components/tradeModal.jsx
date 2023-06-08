@@ -24,6 +24,7 @@ export function TradeForm(props) {
   const [error, setError] = React.useState('');
   const [baseCurrency, setBaseCurrency] = React.useState(5);
   const [limitPrice, setLimitPrice] = React.useState(price);
+  const [orderError, setOrderError] = React.useState('');
 
   const [selectedOrderType, setSelectedOrderType] = useState({
     label: 'MARKET',
@@ -83,8 +84,15 @@ export function TradeForm(props) {
         selectedOrderType.value,
         limitPrice
       );
-      alert(order);
-      closeModal();
+      console.log(userOrder);
+      if (userOrder.success === true) {
+        alert(
+          `Your order success was ${userOrder.success} and your Order Id is ${order.order_id}.`
+        );
+        closeModal();
+      } else {
+        setOrderError(userOrder.error_response.message);
+      }
     } catch (error) {
       console.log('error', error);
       alert(error.message);
@@ -180,6 +188,9 @@ export function TradeForm(props) {
               />
             </FormField>
           )}
+          {orderError !== '' ? (
+            <p style={{ color: 'red' }}>{orderError}</p>
+          ) : null}
         </Form>
       </form>
     </Modal>
