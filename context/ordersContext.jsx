@@ -110,7 +110,7 @@ const OrdersProvider = ({ children }) => {
     let path;
     try {
       if (side === 'SELL') {
-        path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}&type=${type}&limtiPrice=${limitPrice}`;
+        path = `/api/orders?token=${token}&product_id=${product_id}-USD&base_size=${quote_size}&side=${side}&type=${type}&limitPrice=${limitPrice}`;
       } else {
         path = `/api/orders?token=${token}&product_id=${product_id}-USD&quote_size=${quote_size}&side=${side}&type=${type}&limitPrice=${limitPrice}`;
       }

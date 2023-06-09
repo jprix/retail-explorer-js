@@ -53,7 +53,6 @@ export function TradeForm(props) {
   const handleBaseCurrency = (bsc) => {
     if (!isNaN(+bsc)) {
       setBaseCurrency(bsc);
-      setError('');
     } else {
       setError('Please enter an integer value');
     }
@@ -63,7 +62,6 @@ export function TradeForm(props) {
     const decimalRegex = /^\d+(\.\d+)?$/;
     if (decimalRegex.test(price)) {
       setLimitPrice(price);
-      setError('');
     } else {
       setError('Please enter a valid number');
     }
