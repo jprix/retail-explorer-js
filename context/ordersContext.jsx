@@ -61,10 +61,15 @@ const OrdersProvider = ({ children }) => {
         }
       );
       const data = await orderResponse.json();
-
-      setUserOrders(data);
-      setOrdersLoading(false);
-      setFetching(false);
+      if (data.errors) {
+        console.log('your orders API didnt respond ', data.errors);
+        setOrdersLoading(false);
+        setFetching(false);
+      } else {
+        setUserOrders(data);
+        setOrdersLoading(false);
+        setFetching(false);
+      }
     } catch (error) {
       console.log('error', error);
       setOrdersLoading(false);

@@ -25,7 +25,6 @@ export default function HomePage() {
         router.push(`/landing?token=${token}`);
       }, 3000); // Delay of 1 second before redirecting
     } else {
-      console.log('getting token please wait, setting spinner');
       setLoading(true);
       getAuthToken(code)
         .then(() => {

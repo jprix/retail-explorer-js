@@ -41,7 +41,6 @@ export default async function orders(req, res) {
         },
       };
       payload = JSON.stringify(body);
-      console.log('limit body', payload);
     } else {
       const body = {
         clientOrderId,
@@ -62,8 +61,6 @@ export default async function orders(req, res) {
       const initiateExecuteOrder = await makeCall(token, path, 'POST', payload);
 
       const response = await initiateExecuteOrder.json();
-
-      console.log('****', response);
 
       return res.status(201).json(response);
     } catch (error) {

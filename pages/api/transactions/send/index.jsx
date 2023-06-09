@@ -15,7 +15,6 @@ export default async function orders(req, res) {
     };
     payload = JSON.stringify(body);
 
-    console.log('hit body', payload);
     try {
       const initiateSend = await makeCall(
         token,
@@ -27,7 +26,6 @@ export default async function orders(req, res) {
 
       const response = await initiateSend.json();
 
-      console.log('****', res.status(), response);
       if (res.status === 201) {
         res.status(201).json(response);
       } else if (res.status === 402) {

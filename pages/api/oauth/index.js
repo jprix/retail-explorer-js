@@ -1,5 +1,4 @@
 export default async function handler(req, res) {
-  console.log('hit api');
   if (req.method === 'POST') {
     // Handle a POST request
     const { query } = req;
@@ -8,7 +7,6 @@ export default async function handler(req, res) {
     const redirectUri = process.env.NEXT_PUBLIC_ENCODED_REDIRECT_URL;
     const oauthUrl = process.env.NEXT_PUBLIC_OAUTH_BASE_URL;
 
-    console.log('this is the query ', query.code);
     const targetUrl = `${oauthUrl}/oauth/token`;
     const payload = {
       grant_type: 'authorization_code',

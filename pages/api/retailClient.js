@@ -5,9 +5,9 @@ export const makeCall = async (
   body = '',
   twoFAcode = ''
 ) => {
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-  const targetUrl = `https://api.coinbase.com${path}`;
+  const targetUrl = `${baseUrl}${path}`;
   let headers;
 
   if (twoFAcode !== '') {
@@ -37,8 +37,7 @@ export const makeCall = async (
     }
 
     const callRetail = await fetch(targetUrl, options);
-    console.log('this is the target url', targetUrl, body);
-    console.log('this is the base url', baseUrl);
+
     return callRetail;
   } catch (e) {
     return e;

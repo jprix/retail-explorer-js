@@ -4,7 +4,6 @@ export default async function OrderById(req, res) {
   const { query } = req;
 
   const { token, account_id, id } = query;
-  console.log(token, id);
   let path = `/api/v3/brokerage/orders/historical/${id}`;
 
   if (req.method === 'GET') {

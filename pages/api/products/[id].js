@@ -4,7 +4,6 @@ export default async function ProductById(req, res) {
   const { query } = req;
 
   const { token, id } = query;
-  console.log(token, id);
   let path = `/api/v3/brokerage/products/${id}`;
 
   if (req.method === 'GET') {
