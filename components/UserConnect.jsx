@@ -25,7 +25,7 @@ export function UserConnect(props) {
   const initiateOauth = () => {
     const scope = selectedScopeOptions.map((scope) => scope.value).join(' ');
     const state = Math.floor(Date.now() / 1000);
-    const authorizeUrl = `${OAUTH_BASE_URL}/oauth/authorize?client_id=${clientId}&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2F&response_type=code&scope=${scope}&state=${state}&account=all&meta[account]=all&meta[send_limit_amount]=1.00&meta[send_limit_currency]=USD&meta[send_limit_period]=month`;
+    const authorizeUrl = `${OAUTH_BASE_URL}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}&account=all&meta[account]=all&meta[send_limit_amount]=1.00&meta[send_limit_currency]=USD&meta[send_limit_period]=month`;
 
     window.location.href = authorizeUrl;
   };
