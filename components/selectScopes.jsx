@@ -55,7 +55,7 @@ export function SelectScopes({
       value: 'wallet:payment-methods:limits',
     },
   ];
-
+  
   const handleSelectAll = () => {
     const allValues = scopes.map((scope) => scope);
     setSelectedScopeOptions(allValues);

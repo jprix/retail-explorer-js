@@ -22,9 +22,22 @@ export function UserConnect(props) {
     }
   }, []);
 
+  function generateRandomString(length) {
+    let result = '';
+    const characters =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const charactersLength = characters.length;
+
+    for (let i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+  }
+
   const initiateOauth = () => {
     const scope = selectedScopeOptions.map((scope) => scope.value).join(' ');
-    const state = Math.floor(Date.now() / 1000);
+    const state = generateRandomString(10)
     const authorizeUrl = `${OAUTH_BASE_URL}/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code&scope=${scope}&state=${state}&account=all&meta[account]=all&meta[send_limit_amount]=1.00&meta[send_limit_currency]=USD&meta[send_limit_period]=month`;
 
     window.location.href = authorizeUrl;
