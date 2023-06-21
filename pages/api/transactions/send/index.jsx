@@ -1,5 +1,6 @@
 import { makeCall } from '../../retailClient';
 import { uuid } from 'uuidv4';
+import { response } from 'express';
 export default async function orders(req, res) {
   const { query } = req;
   const { token, to, amount, asset, twoFAcode } = query;
@@ -25,17 +26,18 @@ export default async function orders(req, res) {
       );
 
       const response = await initiateSend.json();
+      
 
-      if (res.status === 201) {
+      if (initiateSend.status === 201) {
         res.status(201).json(response);
-      } else if (res.status === 402) {
-        return res.status(201).json(response.errors[0]);
+      } else if (initiateSend.status === 402) {
+        return res.status(402).json({ error: response.errors[0] });
       } else {
-        return res.status(500).json({ error: 'Something went wrong' });
+        return res.status(500).json({ error: response.errors[0] });
       }
     } catch (error) {
       console.log('this was the  send error', error);
-      res.status(500).json({ error: 'Something went wrong' });
+      res.status(500).json({ error: error.message });
     }
   } else {
     // Handle any other HTTP method
