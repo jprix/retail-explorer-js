@@ -16,15 +16,16 @@ import { AssetContext } from '../context/assetContext';
 import { OrdersContext } from '../context/ordersContext';
 
 export function TradeForm(props) {
-  const { userOrder, placingOrder, createOrder } = useContext(OrdersContext);
+  const { userOrder, placingOrder, createOrder, setUserOrder } =
+    useContext(OrdersContext);
 
   const { token, price } = props;
   const { asset } = useContext(AssetContext);
-  const [quoteSize, setQuoteSize] = React.useState('1');
-  const [error, setError] = React.useState('');
-  const [baseCurrency, setBaseCurrency] = React.useState(5);
-  const [limitPrice, setLimitPrice] = React.useState(price);
-  const [orderError, setOrderError] = React.useState('');
+  const [quoteSize, setQuoteSize] = useState('1');
+  const [error, setError] = useState('');
+  const [baseCurrency, setBaseCurrency] = useState(5);
+  const [limitPrice, setLimitPrice] = useState(price);
+  const [orderError, setOrderError] = useState('');
 
   const [selectedOrderType, setSelectedOrderType] = useState({
     label: 'MARKET',
@@ -81,20 +82,30 @@ export function TradeForm(props) {
         selectedOrderType.value,
         limitPrice
       );
-      if (userOrder.success === true) {
-        alert(
-          `Your order success was ${userOrder.success} and your Order Id is ${order.order_id}.`
-        );
-        closeModal();
-      } else {
-        setOrderError(userOrder?.error_response?.message);
-      }
+      console.log('userOrder is', userOrder);
     } catch (error) {
       console.log('error', error);
       alert(error.message);
       closeModal();
     }
   };
+
+  useEffect(() => {
+    if (userOrder.success !== null) {
+      if (userOrder.success === true) {
+        alert(
+          `Your order success was ${userOrder?.success} and your Order Id is ${userOrder.order_id}.`
+        );
+        closeModal();
+      } else {
+        setOrderError(userOrder?.error_response?.message);
+      }
+    }
+  }, [userOrder.success]);
+
+
+     
+
 
   return (
     <Modal

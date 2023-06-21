@@ -7,10 +7,7 @@ import {
   FormField,
   Box,
   SpaceBetween,
-  Select,
-  Spinner,
   Input,
-  Textarea,
 } from '@cloudscape-design/components';
 
 import { AssetContext } from '../context/assetContext';
@@ -19,6 +16,7 @@ export function ReceiveForm(props) {
   const { token } = props;
   const { asset } = useContext(AssetContext);
   const [address, setAddress] = useState({});
+  const [addressName, setAddressName] = useState('');
 
   const closeModal = () => {
     props.close();
@@ -39,6 +37,10 @@ export function ReceiveForm(props) {
 
       closeModal();
     }
+  };
+
+  const handleAddressName = (name) => {
+    setAddressName(name);
   };
 
   return (
@@ -70,8 +72,20 @@ export function ReceiveForm(props) {
             </Box>
           }
         >
+          <FormField label="Address Name:" id="addressName">
+            <Input
+              type="text"
+              id="addressName"
+              name="addressName"
+              value={addressName}
+              onChange={({ detail }) => handleAddressName(detail.value)}
+            />
+          </FormField>
+
           <div>
-            <p>Would you like to generate a {asset} address?</p>
+            <p>
+              <strong>Would you like to generate a {asset} address?</strong>
+            </p>
             {Object.keys(address).length !== 0 ? (
               <div>
                 <p>

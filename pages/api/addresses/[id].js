@@ -2,13 +2,18 @@ import { makeCall } from '../retailClient';
 export default async function createAddress(req, res) {
   const { query } = req;
 
-  const { token, id } = query;
+  const { token, id, name } = query;
+   const body = {
+     name,
+   };
+   payload = JSON.stringify(body);
+
 
   let path = `/v2/accounts/${id}/addresses`;
 
   if (req.method === 'POST') {
     try {
-      const generateAddress = await makeCall(token, path, 'POST');
+      const generateAddress = await makeCall(token, path, 'POST', payload);
       const response = await generateAddress.json();
       const newAddress = response.data;
 

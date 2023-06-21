@@ -62,7 +62,6 @@ const OrdersProvider = ({ children }) => {
       );
       const data = await orderResponse.json();
       if (data.errors) {
-        console.log('your orders API didnt respond ', data.errors);
         setOrdersLoading(false);
         setFetching(false);
       } else {
@@ -125,6 +124,7 @@ const OrdersProvider = ({ children }) => {
         method: 'POST',
       });
       const data = await createOrderResponse.json();
+      console.log('context ' , data)
       setUserOrder(data);
       setUserOrders((prevOrders) => [...prevOrders, data]);
       setPlacingOrderLoading(false);
@@ -143,6 +143,7 @@ const OrdersProvider = ({ children }) => {
     userOrder,
     createOrder,
     userOrders,
+    setUserOrder,
     ordersLoading,
     getOrders,
     getOrderByID,
