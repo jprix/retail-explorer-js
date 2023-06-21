@@ -6,7 +6,7 @@ export default async function createAddress(req, res) {
    const body = {
      name,
    };
-   payload = JSON.stringify(body);
+  const payload = JSON.stringify(body);
 
 
   let path = `/v2/accounts/${id}/addresses`;

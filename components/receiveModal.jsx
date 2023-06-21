@@ -25,7 +25,7 @@ export function ReceiveForm(props) {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const path = `/api/addresses/${asset}?token=${token}`;
+      const path = `/api/addresses/${asset}?token=${token}&name=${addressName}`;
 
       const createAddressResponse = await fetch(path, {
         method: 'POST',
