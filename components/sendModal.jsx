@@ -38,13 +38,10 @@ export function SendForm(props) {
            method: 'POST',
          });
          const response = await createSendResponse.json();
-         console.log('hit 2FA not required', sendDetails);
          setTwoFAReceived(false);
-         console.log('this is the response', response)
          setSendDetails(response?.data);
        
       } else {
-         console.log('hit 2FA received', sendDetails);
          const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
          const createSend2FA = await fetch(path, {
            method: 'POST',

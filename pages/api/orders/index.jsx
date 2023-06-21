@@ -23,7 +23,6 @@ export default async function orders(req, res) {
 
       return res.status(200).json(fills);
     } catch (error) {
-      console.log('this was the user orders error', error);
       res.status(500).json({ error: 'Something went wrong' });
     }
   } else if (req.method === 'POST') {
@@ -41,6 +40,7 @@ export default async function orders(req, res) {
         },
       };
       payload = JSON.stringify(body);
+
     } else {
       const body = {
         clientOrderId,
@@ -55,7 +55,6 @@ export default async function orders(req, res) {
       payload = JSON.stringify(body);
     }
 
-    console.log('hit body', payload);
     path = '/api/v3/brokerage/orders';
     try {
       const initiateExecuteOrder = await makeCall(token, path, 'POST', payload);

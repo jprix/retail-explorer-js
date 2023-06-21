@@ -37,7 +37,7 @@ export const makeCall = async (
     }
 
     const callRetail = await fetch(targetUrl, options);
-          console.log('this is api call response', callRetail);
+    console.log('this is api call response', callRetail);
 
 
     return callRetail;

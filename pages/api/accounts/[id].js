@@ -14,7 +14,6 @@ export default async function listAccount(req, res) {
 
       return res.status(200).json(AccountById);
     } catch (error) {
-      console.log('this was the user orders error', error);
       res.status(500).json({ error: 'Something went wrong' });
     }
   } else {

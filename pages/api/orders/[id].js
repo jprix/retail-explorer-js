@@ -15,7 +15,6 @@ export default async function OrderById(req, res) {
 
       return res.status(200).json(userOrder);
     } catch (error) {
-      console.log('this was the user profile error', error);
       res.status(500).json({ error: 'Something went wrong' });
     }
   } else {

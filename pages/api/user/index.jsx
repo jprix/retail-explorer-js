@@ -11,8 +11,7 @@ export default async function handler(req, res) {
       const userProfile = await getUser.json();
       return res.status(200).json(userProfile);
     } catch (error) {
-      console.log('this was the user profile error', error);
-      res.status(500).json({ error: 'Something went wrong' });
+      res.status(500).json({ error: error.message });
     }
   } else {
     // Handle any other HTTP method

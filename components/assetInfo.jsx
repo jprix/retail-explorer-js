@@ -18,15 +18,15 @@ import {
   SpaceBetween,
 } from '@cloudscape-design/components';
 
+
+
 function AssetInfo(props) {
   const {
     userAsset,
-    selectedAsset,
     assetLoading: assetLoaded,
     getAsset,
     asset,
   } = useContext(AssetContext);
-  const { userOrders, userOpenOrders } = useContext(OrdersContext);
 
   const token = props.token;
   const closeTradeModal = () => {

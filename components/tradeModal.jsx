@@ -82,7 +82,6 @@ export function TradeForm(props) {
         selectedOrderType.value,
         limitPrice
       );
-      console.log('userOrder is', userOrder);
     } catch (error) {
       console.log('error', error);
       alert(error.message);
