@@ -96,6 +96,7 @@ export function TradeForm(props) {
         alert(
           `Your order success was ${userOrder?.success} and your Order Id is ${userOrder.order_id}.`
         );
+        setUserOrder({});
         closeModal();
       } else {
         setOrderError(userOrder?.error_response?.message);
