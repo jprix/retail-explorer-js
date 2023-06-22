@@ -13,14 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { CartContext } from "../context/cartContext";
 import { Button } from "@cloudscape-design/components";
 import styles from "../styles/Products.module.css";
 import QRCode from "react-qr-code";
 
 const Asset = ({ asset }) => {
-  const { chargeAddresses, exchangeRate, totalPrice, chargeDetails } =
+  const { chargeAddresses, exchangeRate, totalPrice } =
     useContext(CartContext);
   const selectedAsset = new String(asset).toLowerCase();
   const formatter = new Intl.NumberFormat("en-US", {
