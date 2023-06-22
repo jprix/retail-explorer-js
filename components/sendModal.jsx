@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   Button,
   Input,
@@ -7,25 +7,25 @@ import {
   Box,
   SpaceBetween,
   FormField,
-} from '@cloudscape-design/components';
-import { AssetContext } from '../context/assetContext';
+} from "@cloudscape-design/components";
+import { AssetContext } from "../context/assetContext";
 
 export function SendForm(props) {
   const { token } = props;
   const { asset } = useContext(AssetContext);
   const [sendDetails, setSendDetails] = useState({});
-  const [to, setTo] = useState('');
-  const [amount, setAmount] = useState('');
-  const [error, setError] = useState('');
+  const [to, setTo] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
   const [twoFAReceived, setTwoFAReceived] = useState(false);
-  const [twoFAcode, setTwoFAcode] = useState('');
+  const [twoFAcode, setTwoFAcode] = useState("");
 
   const closeModal = () => {
     props.close();
   };
 
   useEffect(() => {
-    console.log('this is the txn details:', sendDetails);
+    console.log("this is the txn details:", sendDetails);
   }, [sendDetails]);
 
   const handleSubmit = async (event) => {
@@ -33,27 +33,25 @@ export function SendForm(props) {
 
     try {
       if (twoFAReceived) {
-         const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}&twoFAcode=${twoFAcode}`;
-         const createSendResponse = await fetch(path, {
-           method: 'POST',
-         });
-         const response = await createSendResponse.json();
-         setTwoFAReceived(false);
-         setSendDetails(response?.data);
-       
+        const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}&twoFAcode=${twoFAcode}`;
+        const createSendResponse = await fetch(path, {
+          method: "POST",
+        });
+        const response = await createSendResponse.json();
+        setTwoFAReceived(false);
+        setSendDetails(response?.data);
       } else {
-         const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
-         const createSend2FA = await fetch(path, {
-           method: 'POST',
-         });
+        const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
+        const createSend2FA = await fetch(path, {
+          method: "POST",
+        });
 
-         const response = await createSend2FA.json();
-         console.log('2FA sent', response);
-         setTwoFAReceived(true);
-       
+        const response = await createSend2FA.json();
+        console.log("2FA sent", response);
+        setTwoFAReceived(true);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
   const handle2FA = (value) => {
@@ -62,13 +60,13 @@ export function SendForm(props) {
     if (decimalRegex.test(value)) {
       setTwoFAcode(value);
     } else {
-      setError('Please enter 2FA code');
+      setError("Please enter 2FA code");
     }
   };
 
   const handleTo = async (value) => {
-        setTo(value);
-        setError(''); 
+    setTo(value);
+    setError("");
   };
 
   const handleAmount = (value) => {
@@ -76,9 +74,9 @@ export function SendForm(props) {
 
     if (decimalRegex.test(value)) {
       setAmount(value);
-      setError('');
+      setError("");
     } else {
-      setError('Please enter a valid number');
+      setError("Please enter a valid number");
     }
   };
   return (
@@ -102,8 +100,8 @@ export function SendForm(props) {
                     id="submit"
                     variant={
                       Object.keys(sendDetails).length !== 0
-                        ? 'ternary'
-                        : 'primary'
+                        ? "ternary"
+                        : "primary"
                     }
                   >
                     {Object.keys(sendDetails).length !== 0
@@ -134,7 +132,7 @@ export function SendForm(props) {
             />
           </FormField>
           {error && (
-            <div style={{ color: 'red' }}>
+            <div style={{ color: "red" }}>
               <p>{error}</p>
             </div>
           )}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Button,
@@ -10,10 +10,10 @@ import {
   Select,
   Spinner,
   Input,
-} from '@cloudscape-design/components';
+} from "@cloudscape-design/components";
 
-import { AssetContext } from '../context/assetContext';
-import { OrdersContext } from '../context/ordersContext';
+import { AssetContext } from "../context/assetContext";
+import { OrdersContext } from "../context/ordersContext";
 
 export function TradeForm(props) {
   const { userOrder, placingOrder, createOrder, setUserOrder } =
@@ -21,20 +21,20 @@ export function TradeForm(props) {
 
   const { token, price } = props;
   const { asset } = useContext(AssetContext);
-  const [quoteSize, setQuoteSize] = useState('1');
-  const [error, setError] = useState('');
+  const [quoteSize, setQuoteSize] = useState("1");
+  const [error, setError] = useState("");
   const [baseCurrency, setBaseCurrency] = useState(5);
   const [limitPrice, setLimitPrice] = useState(price);
-  const [orderError, setOrderError] = useState('');
+  const [orderError, setOrderError] = useState("");
 
   const [selectedOrderType, setSelectedOrderType] = useState({
-    label: 'MARKET',
-    value: 'MARKET',
+    label: "MARKET",
+    value: "MARKET",
   });
 
   const [selectedOrderSide, setSelectedOrderSide] = useState({
-    label: 'BUY',
-    value: 'BUY',
+    label: "BUY",
+    value: "BUY",
   });
 
   const closeModal = () => {
@@ -45,9 +45,9 @@ export function TradeForm(props) {
     const decimalRegex = /^\d+(\.\d+)?$/;
     if (decimalRegex.test(quote)) {
       setQuoteSize(quote);
-      setError('');
+      setError("");
     } else {
-      setError('Please enter a valid number');
+      setError("Please enter a valid number");
     }
   };
 
@@ -55,7 +55,7 @@ export function TradeForm(props) {
     if (!isNaN(+bsc)) {
       setBaseCurrency(bsc);
     } else {
-      setError('Please enter an integer value');
+      setError("Please enter an integer value");
     }
   };
 
@@ -64,7 +64,7 @@ export function TradeForm(props) {
     if (decimalRegex.test(price)) {
       setLimitPrice(price);
     } else {
-      setError('Please enter a valid number');
+      setError("Please enter a valid number");
     }
   };
 
@@ -74,8 +74,8 @@ export function TradeForm(props) {
       const order = await createOrder(
         token,
         asset,
-        selectedOrderSide.value === 'SELL' ||
-          selectedOrderType.value === 'LIMIT'
+        selectedOrderSide.value === "SELL" ||
+          selectedOrderType.value === "LIMIT"
           ? baseCurrency
           : quoteSize,
         selectedOrderSide.value,
@@ -83,7 +83,7 @@ export function TradeForm(props) {
         limitPrice
       );
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
       alert(error.message);
       closeModal();
     }
@@ -102,10 +102,6 @@ export function TradeForm(props) {
       }
     }
   }, [userOrder.success]);
-
-
-     
-
 
   return (
     <Modal
@@ -142,8 +138,8 @@ export function TradeForm(props) {
                 setSelectedOrderType(detail.selectedOption)
               }
               options={[
-                { label: 'MARKET', value: 'MARKET' },
-                { label: 'LIMIT', value: 'LIMIT' },
+                { label: "MARKET", value: "MARKET" },
+                { label: "LIMIT", value: "LIMIT" },
               ]}
               selectedAriaLabel="Selected Order Type"
             />
@@ -156,13 +152,13 @@ export function TradeForm(props) {
                 setSelectedOrderSide(detail.selectedOption)
               }
               options={[
-                { label: 'BUY', value: 'BUY' },
-                { label: 'SELL', value: 'SELL' },
+                { label: "BUY", value: "BUY" },
+                { label: "SELL", value: "SELL" },
               ]}
               selectedAriaLabel="Selected Side"
             />
           </FormField>
-          {selectedOrderType.value === 'LIMIT' ? (
+          {selectedOrderType.value === "LIMIT" ? (
             <FormField label="Limit Price" id="lPrice" errorText={error}>
               <Input
                 id="price"
@@ -171,8 +167,8 @@ export function TradeForm(props) {
               />
             </FormField>
           ) : null}
-          {selectedOrderSide.value === 'BUY' &&
-          selectedOrderType.value === 'MARKET' ? (
+          {selectedOrderSide.value === "BUY" &&
+          selectedOrderType.value === "MARKET" ? (
             <FormField label="quote size" id="quote" errorText={error}>
               <Input
                 id="inputQuouteSize"
@@ -193,8 +189,8 @@ export function TradeForm(props) {
               />
             </FormField>
           )}
-          {orderError !== '' ? (
-            <p style={{ color: 'red' }}>{orderError}</p>
+          {orderError !== "" ? (
+            <p style={{ color: "red" }}>{orderError}</p>
           ) : null}
         </Form>
       </form>

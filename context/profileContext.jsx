@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, createContext } from "react";
 
 const defaultState = {};
 
@@ -16,7 +16,7 @@ const ProfileProvider = ({ children }) => {
     }
     setFetching(true);
     const tokenResponse = await fetch(`/api/user?token=${token}`, {
-      method: 'GET',
+      method: "GET",
     });
 
     const data = await tokenResponse.json();
