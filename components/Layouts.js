@@ -35,7 +35,7 @@ export default function Layout({ title, keywords, description, children }) {
 }
 
 Layout.defaultProps = {
-  title: "Coin Auth | Luxury Home Furniture",
-  description: "Find high quality furniture",
-  keywords: "furniture, luxury, chairs",
+  title: "Coin Auth | Advanded Trading",
+  description: "Trade, Transfer and receive crypto assets",
+  keywords: "trade, send, receive",
 };

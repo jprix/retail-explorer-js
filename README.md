@@ -1,4 +1,4 @@
-Built with [Next.js](https://nextjs.org/), Coin Auth is a luxury furniture store that has implemented Coinbase Commerce to accept crypto payments from customers.
+Built with [Next.js](https://nextjs.org/), Coin Auth is a reference implementation app showing how to connect Coinbase users to a third party app using OAuth2.0.  Once connected Coin Auth offers advanced trading, sending and receiving of crypto assets.
 
 ## Getting Started
 
