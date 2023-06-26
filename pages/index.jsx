@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { useContext, useState, useEffect } from 'react';
-import Layout from '../components/Layouts';
-import { useRouter } from 'next/router';
-import { Button, Spinner } from '@cloudscape-design/components';
-import { UserConnect } from '../components/UserConnect';
-import { UserContext } from '../context/UserContext';
+import * as React from "react";
+import { useContext, useState, useEffect } from "react";
+import Layout from "../components/Layouts";
+import { useRouter } from "next/router";
+import { Button, Spinner } from "@cloudscape-design/components";
+import { UserConnect } from "../components/UserConnect";
+import { UserContext } from "../context/UserContext";
 
 export default function HomePage() {
   const [showModal, setShowModal] = useState(false);

@@ -1,52 +1,57 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import {
   Button,
+  Input,
   Modal,
   Form,
   Box,
-  Input,
   SpaceBetween,
   FormField,
-} from '@cloudscape-design/components';
-import { AssetContext } from '../context/assetContext';
+} from "@cloudscape-design/components";
+import { AssetContext } from "../context/assetContext";
 
 export function SendForm(props) {
   const { token } = props;
   const { asset } = useContext(AssetContext);
   const [sendDetails, setSendDetails] = useState({});
-  const [to, setTo] = useState('');
-  const [amount, setAmount] = useState('');
-  const [error, setError] = useState('');
+  const [to, setTo] = useState("");
+  const [amount, setAmount] = useState("");
+  const [error, setError] = useState("");
   const [twoFAReceived, setTwoFAReceived] = useState(false);
-  const [twoFAcode, setTwoFAcode] = useState('');
+  const [twoFAcode, setTwoFAcode] = useState("");
 
   const closeModal = () => {
     props.close();
   };
 
+  useEffect(() => {
+    console.log("this is the txn details:", sendDetails);
+  }, [sendDetails]);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      if (!twoFAReceived) {
-        const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
-        const createSend2FA = await fetch(path, {
-          method: 'POST',
-        });
-
-        const response = await createSend2FA.json();
-        setTwoFAReceived(true);
-      } else {
+      if (twoFAReceived) {
         const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}&twoFAcode=${twoFAcode}`;
         const createSendResponse = await fetch(path, {
-          method: 'POST',
+          method: "POST",
         });
         const response = await createSendResponse.json();
         setTwoFAReceived(false);
-        sendDetails(response.data);
+        setSendDetails(response?.data);
+      } else {
+        const path = `/api/transactions/send?token=${token}&to=${to}&amount=${amount}&asset=${asset}`;
+        const createSend2FA = await fetch(path, {
+          method: "POST",
+        });
+
+        const response = await createSend2FA.json();
+        console.log("2FA sent", response);
+        setTwoFAReceived(true);
       }
     } catch (error) {
-      console.log('error', error);
+      console.log("error", error);
     }
   };
   const handle2FA = (value) => {
@@ -55,17 +60,23 @@ export function SendForm(props) {
     if (decimalRegex.test(value)) {
       setTwoFAcode(value);
     } else {
-      setError('Please enter 2FA code');
+      setError("Please enter 2FA code");
     }
   };
+
+  const handleTo = async (value) => {
+    setTo(value);
+    setError("");
+  };
+
   const handleAmount = (value) => {
     const decimalRegex = /^\d*\.?\d*$/;
 
     if (decimalRegex.test(value)) {
       setAmount(value);
-      setError('');
+      setError("");
     } else {
-      setError('Please enter a valid number');
+      setError("Please enter a valid number");
     }
   };
   return (
@@ -85,8 +96,17 @@ export function SendForm(props) {
                   Close
                 </Button>
                 <SpaceBetween id="formLabel" direction="horizontal" size="xs">
-                  <Button id="submit" variant="primary">
-                    Send {asset}
+                  <Button
+                    id="submit"
+                    variant={
+                      Object.keys(sendDetails).length !== 0
+                        ? "ternary"
+                        : "primary"
+                    }
+                  >
+                    {Object.keys(sendDetails).length !== 0
+                      ? null
+                      : `Send ${asset}`}
                   </Button>
                 </SpaceBetween>
               </SpaceBetween>
@@ -99,7 +119,7 @@ export function SendForm(props) {
               id="to"
               name="to"
               value={to}
-              onChange={(e) => setTo(e.target.value)}
+              onChange={({ detail }) => handleTo(detail.value)}
             />
           </FormField>
           <FormField label="Amount:" id="amount">
@@ -108,11 +128,11 @@ export function SendForm(props) {
               id="amount"
               name="amount"
               value={amount}
-              onChange={(e) => handleAmount(e.target.value)}
+              onChange={({ detail }) => handleAmount(detail.value)}
             />
           </FormField>
           {error && (
-            <div style={{ color: 'red' }}>
+            <div style={{ color: "red" }}>
               <p>{error}</p>
             </div>
           )}
@@ -126,7 +146,7 @@ export function SendForm(props) {
                 id="twoFA"
                 name="twoFA"
                 value={twoFAcode}
-                onChange={(e) => handle2FA(e.target.value)}
+                onChange={({ detail }) => handle2FA(detail.value)}
               />
             </FormField>
           ) : null}
@@ -135,7 +155,7 @@ export function SendForm(props) {
             {Object.keys(sendDetails).length !== 0 ? (
               <div>
                 <p>
-                  <b>Here is your transactions id: {sendDetails.id}</b>
+                  <b>Here is your transactions id: {sendDetails?.id}</b>
                 </p>
               </div>
             ) : null}
